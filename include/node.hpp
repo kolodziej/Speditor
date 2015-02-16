@@ -1,12 +1,12 @@
-#ifndef SPEDITOR_NAVIGATION_NODE_HPP
-#define SPEDITOR_NAVIGATION_NODE_HPP
+#ifndef SPEDITOR_NODE_HPP
+#define SPEDITOR_NODE_HPP
 #include "node_type.hpp"
 #include "road.hpp"
 
 #include <vector>
 #include <memory>
 
-namespace speditor { namespace navigation {
+namespace speditor {
 
 class Node
 {
@@ -18,6 +18,6 @@ private:
 	std::vector<std::shared_ptr<Road>> roads_;
 };
 
-} }
+}
 
 #endif

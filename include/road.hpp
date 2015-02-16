@@ -1,8 +1,8 @@
-#ifndef SPEDITOR_NAVIGATION_ROAD_HPP
-#define SPEDITOR_NAVIGATION_ROAD_HPP
+#ifndef SPEDITOR_ROAD_HPP
+#define SPEDITOR_ROAD_HPP
 #include <memory>
 
-namespace speditor { namespace navigation {
+namespace speditor {
 
 class Road
 {
@@ -17,6 +17,6 @@ private:
 	std::shared_ptr<Node> destination_;
 };
 
-} }
+}
 
 #endif

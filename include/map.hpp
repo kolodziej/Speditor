@@ -1,9 +1,9 @@
-#ifndef SPEDITOR_NAVIGATION_MAP_HPP
-#define SPEDITOR_NAVIGATION_MAP_HPP
+#ifndef SPEDITOR_MAP_HPP
+#define SPEDITOR_MAP_HPP
 #include <vector>
 #include <memory>
 
-namespace speditor { namespace navigation {
+namespace speditor {
 
 class Map
 {
@@ -14,6 +14,6 @@ private:
 	std::vector<std::shared_ptr<Node>> nodes_;
 };
 
-} }
+}
 
 #endif
