@@ -22,6 +22,8 @@ set(SOURCES
  "${SD}/src/node.cpp"
  "${SD}/src/road.cpp"
  "${SD}/src/route.cpp"
+ "${SD}/src/clock.cpp"
+ "${SD}/src/timepoint.cpp"
 )
 
 set(HEADERS
@@ -31,6 +33,8 @@ set(HEADERS
 	"${SD}/include/node_type.hpp"
 	"${SD}/include/road.hpp"
 	"${SD}/include/route.hpp"
+	"${SD}/include/clock.hpp"
+	"${SD}/include/timepoint.hpp"
 )
 
 add_library(Speditor STATIC ${HEADERS} ${SOURCES})
