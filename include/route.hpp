@@ -7,6 +7,7 @@ namespace speditor {
 
 class Node;
 class Road;
+class Map;
 
 class Route
 {
@@ -21,6 +22,9 @@ private:
 	std::shared_ptr<Node> start_point_;
 	std::shared_ptr<Node> end_point_;
 	std::vector<std::shared_ptr<Node>> middle_points_;
+	std::vector<std::shared_ptr<Road>> roads_;
+
+	friend class Map;
 };
 
 }
