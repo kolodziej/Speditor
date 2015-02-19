@@ -4,7 +4,6 @@ project(Speditor)
 
 include_directories(
 	"${PROJECT_SOURCE_DIR}/include"
-	"${PROJECT_SOURCE_DIR}/googletest"
 	"${PROJECT_SOURCE_DIR}"
 )
 

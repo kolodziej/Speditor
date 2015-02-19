@@ -2,4 +2,7 @@
 *.swo
 *.gch
 *.o
-googletest/*
+CMakeFiles
+cmake_install.cmake
+Makefile
+CMakeCache.txt
