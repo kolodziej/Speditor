@@ -2,6 +2,7 @@
 #define SPEDITOR_MAP_HPP
 #include <vector>
 #include <memory>
+#include <istream>
 
 namespace speditor {
 
@@ -16,6 +17,8 @@ public:
 	void calcRoadsParams();
 
 private:
+	std::vector<std::shared_ptr<Road>> algDijkstra_(std::shared_ptr<Node>, std::shared_ptr<Node>);
+
 	std::vector<std::shared_ptr<Node>> nodes_;
 };
 
