@@ -4,7 +4,7 @@ project(Speditor)
 
 include_directories(
 	"${PROJECT_SOURCE_DIR}/include"
-	"${PROJECT_SOURCE_DIR}/gtest"
+	"${PROJECT_SOURCE_DIR}/googletest"
 	"${PROJECT_SOURCE_DIR}"
 )
 
@@ -40,6 +40,6 @@ set(HEADERS
 add_library(Speditor STATIC ${HEADERS} ${SOURCES})
 
 if(MAKE_TESTS)
-	add_subdirectory(gtest)
+	add_subdirectory(googletest)
 	add_subdirectory(tests)
 endif(MAKE_TESTS)

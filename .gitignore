@@ -2,3 +2,4 @@
 *.swo
 *.gch
 *.o
+googletest/*
