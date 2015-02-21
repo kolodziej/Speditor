@@ -4,6 +4,12 @@
 
 namespace speditor { namespace tools {
 
+Logger::Logger(std::ostream& output, bool show_time, bool show_tid) :
+	output_(output),
+	show_time_(show_time),
+	show_tid_(show_tid)
+{}
+
 std::string Logger::format_now_time_()
 {
 	auto time_point = clock_.now();

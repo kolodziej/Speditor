@@ -3,12 +3,6 @@
 
 namespace speditor { namespace tools {
 
-Logger::Logger(std::ostream& output, bool show_time, bool show_tid) :
-	output_(output),
-	show_time_(show_time),
-	show_tid_(show_tid)
-{}
-
 template <typename... Args>
 inline void Logger::log(LogType type, Args... args)
 {
@@ -44,19 +38,20 @@ inline void Logger::log(LogType type, Args... args)
 		log_ << "TID=" << std::this_thread::get_id() << " ";
 	}
 
-	push_log(args...);
+	push_log_(args...);
 }
 
 template <typename First, typename... Rest>
 inline void Logger::push_log_(First f, Rest... r)
 {
 	log_ << f;
-	push_log(r...);
+	push_log_(r...);
 }
 
 inline void Logger::push_log_()
 {
 	log_ << "\n";
+	output_ << log_.str();
 	lock_.unlock();
 }
 
