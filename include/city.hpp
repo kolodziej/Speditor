@@ -13,11 +13,15 @@ class City :
 	public Node
 {
 public:
-	City(std::string);
+	City(std::string, int, int);
 
 	std::string name();
+	std::vector<std::shared_ptr<Base>> bases();
+	bool addBase(std::shared_ptr<Base>);
+	std::vector<std::shared_ptr<ClientCompany>> clientCompanies();
+	bool addClientCompany(std::shared_ptr<ClientCompany>);
 
-	virtual constexpr NodeType type()
+	virtual NodeType type()
 	{
 		return NodeType::City;
 	}

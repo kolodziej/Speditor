@@ -8,7 +8,7 @@ class Clock;
 class Timepoint
 {
 public:
-	Timepoint(Clock&);
+	Timepoint(const Clock&);
 
 	void set(long long);
 	long long get() const;
@@ -20,7 +20,7 @@ public:
 	int week();
 
 private:
-	Clock& clock_;
+	const Clock& clock_;
 	long long time_;
 
 };

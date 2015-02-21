@@ -12,7 +12,7 @@ class Map;
 class Route
 {
 public:
-	Route(std::shared_ptr<Node>, std::shared_ptr<Node> = nullptr);
+	Route(std::shared_ptr<Node>, std::shared_ptr<Node>);
 
 	std::vector<std::shared_ptr<Node>> getAllNodes();
 	void addMiddleNode(std::shared_ptr<Node>);

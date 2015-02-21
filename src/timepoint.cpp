@@ -1,8 +1,10 @@
 #include "timepoint.hpp"
 
+#include "clock.hpp"
+
 namespace speditor {
 
-Timepoint::Timepoint(Clock& clock) :
+Timepoint::Timepoint(const Clock& clock) :
 	clock_(clock),
 	time_(clock.get())
 {}

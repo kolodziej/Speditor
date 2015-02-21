@@ -2,12 +2,15 @@
 #define SPEDITOR_ROAD_HPP
 #include <memory>
 
+
 namespace speditor {
+
+class Node;
 
 class Road
 {
 public:
-	Road();
+	Road() {}
 
 private:
 	int length_;

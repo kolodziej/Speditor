@@ -13,7 +13,10 @@ void Map::calcRoute(std::shared_ptr<Route> route)
 	std::vector<std::shared_ptr<Node>> nodes = std::move(route->getAllNodes());
 	for (auto it = nodes.begin() + 1; it != nodes.end(); ++it)
 	{
-		route->roads_ += algDijkstra_(it-1, it);
+		for (auto road : algDijkstra_(*(it-1), *it))
+		{
+			route->roads_.push_back(road);
+		}
 	}
 }
 

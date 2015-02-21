@@ -4,10 +4,11 @@
 #include <memory>
 #include <istream>
 
-namespace speditor {
+#include "road.hpp"
+#include "route.hpp"
+#include "node.hpp"
 
-class Node;
-class Route;
+namespace speditor {
 
 class Map
 {

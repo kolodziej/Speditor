@@ -11,7 +11,8 @@ namespace speditor {
 class Node
 {
 public:
-	virtual constexpr NodeType type() = 0;
+	Node() {}
+	virtual NodeType type() = 0;
 	void addRoad(std::shared_ptr<Road>);
 
 private:
