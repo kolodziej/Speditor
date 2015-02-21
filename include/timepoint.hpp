@@ -3,12 +3,10 @@
 
 namespace speditor {
 
-class Clock;
-
 class Timepoint
 {
 public:
-	Timepoint(const Clock&);
+	Timepoint() {}
 
 	void set(long long);
 	long long get() const;
@@ -20,7 +18,6 @@ public:
 	int week();
 
 private:
-	const Clock& clock_;
 	long long time_;
 
 };

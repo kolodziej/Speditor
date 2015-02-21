@@ -10,7 +10,6 @@ class Clock
 public:
 	Clock(int);
 	Timepoint timepoint() const;
-	long long get() const;
 private:
 	const int minute_duration_;
 	long long time_;

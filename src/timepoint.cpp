@@ -4,11 +4,6 @@
 
 namespace speditor {
 
-Timepoint::Timepoint(const Clock& clock) :
-	clock_(clock),
-	time_(clock.get())
-{}
-
 void Timepoint::set(long long time)
 {
 	time_ = time;

@@ -10,13 +10,9 @@ Clock::Clock(int minute_duration) :
 
 Timepoint Clock::timepoint() const
 {
-	Timepoint tp(*this);
+	Timepoint tp;
+	tp.set(time_);
 	return tp;
-}
-
-long long Clock::get() const
-{
-	return time_;
 }
 
 }
