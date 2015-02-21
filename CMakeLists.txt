@@ -16,24 +16,28 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O2 -static -lm")
 set(SD "${PROJECT_SOURCE_DIR}")
 
 set(SOURCES
- "${SD}/src/map.cpp"
- "${SD}/src/city.cpp"
- "${SD}/src/node.cpp"
- "${SD}/src/road.cpp"
- "${SD}/src/route.cpp"
- "${SD}/src/clock.cpp"
- "${SD}/src/timepoint.cpp"
+# "${SD}/src/map.cpp"
+# "${SD}/src/city.cpp"
+# "${SD}/src/node.cpp"
+# "${SD}/src/road.cpp"
+# "${SD}/src/route.cpp"
+# "${SD}/src/clock.cpp"
+# "${SD}/src/timepoint.cpp"
+ "${SD}/src/tools/logger.cpp"
 )
 
 set(HEADERS
-	"${SD}/include/map.hpp"
-	"${SD}/include/city.hpp"
-	"${SD}/include/node.hpp"
-	"${SD}/include/node_type.hpp"
-	"${SD}/include/road.hpp"
-	"${SD}/include/route.hpp"
-	"${SD}/include/clock.hpp"
-	"${SD}/include/timepoint.hpp"
+#	"${SD}/include/map.hpp"
+#	"${SD}/include/city.hpp"
+#	"${SD}/include/node.hpp"
+#	"${SD}/include/node_type.hpp"
+#	"${SD}/include/road.hpp"
+#	"${SD}/include/route.hpp"
+#	"${SD}/include/clock.hpp"
+#	"${SD}/include/timepoint.hpp"
+	"${SD}/include/tools/logger.hpp"
+	"${SD}/include/tools/log_type.hpp"
+	"${SD}/impl/tools/logger.hpp"
 )
 
 add_library(Speditor STATIC ${HEADERS} ${SOURCES})
