@@ -1,4 +1,4 @@
-cmake_minimum_required(3.0.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.0.0 FATAL_ERROR)
 
 link_directories(
 	"../lib/"
@@ -13,7 +13,7 @@ include_directories(
 
 set(CMAKE_CXX_FLAGS "-std=c++11")
 set(LIBRARIES gtest gtest_main Speditor)
-set(CMAKE_BINARY_OUTPUT_DIRECTORY "./bin")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "./bin")
 
-add_executable(clock clock.cpp)
-target_link_libraries(clock "${LIBRARIES}")
+add_executable(logger logger.cpp)
+target_link_libraries(logger "${LIBRARIES}")

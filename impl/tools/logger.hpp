@@ -9,25 +9,6 @@ inline void Logger::log(LogType type, Args... args)
 	lock_.lock();
 	log_.str("");
 
-	switch (type)
-	{
-		case LogType::Info:
-			log_ << "I ";
-			break;
-
-		case LogType::Warning:
-			log_ << "W ";
-			break;
-
-		case LogType::Error:
-			log_ << "E ";
-			break;
-
-		case LogType::Critical:
-			log_ << "CRIT! ";
-			break;
-	}
-
 	if (show_time_)
 	{
 		log_ << format_now_time_() << " ";
@@ -36,6 +17,25 @@ inline void Logger::log(LogType type, Args... args)
 	if (show_tid_)
 	{
 		log_ << "TID=" << std::this_thread::get_id() << " ";
+	}
+
+	switch (type)
+	{
+		case LogType::Info:
+			log_ << "[Info] ";
+			break;
+
+		case LogType::Warning:
+			log_ << "[Warning] ";
+			break;
+
+		case LogType::Error:
+			log_ << "[Error] ";
+			break;
+
+		case LogType::Critical:
+			log_ << "[CRITICAL!] ";
+			break;
 	}
 
 	push_log_(args...);
