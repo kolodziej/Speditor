@@ -2,7 +2,7 @@
 
 namespace speditor {
 
-void Node::addRoad(std::shared_ptr<Road> road)
+void Node::addRoad(RoadPtr road)
 {
 	roads_.push_back(road);
 }

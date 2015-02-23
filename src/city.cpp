@@ -14,12 +14,12 @@ std::string City::name()
 	return name_;
 }
 
-std::vector<std::shared_ptr<Base>> City::bases()
+std::vector<BasePtr> City::bases()
 {
 	return bases_;
 }
 
-bool City::addBase(std::shared_ptr<Base> base)
+bool City::addBase(BasePtr base)
 {
 	if (bases_.size() < max_bases_)
 	{
@@ -30,12 +30,12 @@ bool City::addBase(std::shared_ptr<Base> base)
 	return false;
 }
 
-std::vector<std::shared_ptr<ClientCompany>> City::clientCompanies()
+std::vector<ClientCompanyPtr> City::clientCompanies()
 {
 	return client_companies_;
 }
 
-bool City::addClientCompany(std::shared_ptr<ClientCompany> client_company)
+bool City::addClientCompany(ClientCompanyPtr client_company)
 {
 	if (client_companies_.size() < max_client_companies_)
 	{
