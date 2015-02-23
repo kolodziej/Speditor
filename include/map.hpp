@@ -10,17 +10,21 @@
 
 namespace speditor {
 
+using NodePtr = std::shared_ptr<Node>;
+using RoutePtr = std::shared_ptr<Route>;
+using RoadPtr = std::shared_ptr<Road>;
+
 class Map
 {
 public:
-	void addNode(std::shared_ptr<Node>);
-	void calcRoute(std::shared_ptr<Route>);
+	void addNode(NodePtr);
+	void calcRoute(RoutePtr);
 	void calcRoadsParams();
 
 private:
-	std::vector<std::shared_ptr<Road>> algDijkstra_(std::shared_ptr<Node>, std::shared_ptr<Node>);
+	std::vector<RoadPtr> algDijkstra_(NodePtr, NodePtr);
 
-	std::vector<std::shared_ptr<Node>> nodes_;
+	std::vector<NodePtr> nodes_;
 };
 
 }

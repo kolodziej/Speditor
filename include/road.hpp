@@ -7,6 +7,8 @@ namespace speditor {
 
 class Node;
 
+using NodePtr = std::shared_ptr<Node>;
+
 class Road
 {
 public:
@@ -17,7 +19,7 @@ private:
 	int max_speed_;
 	int avarage_speed_;
 	double traffic_;
-	std::shared_ptr<Node> destination_;
+	NodePtr destination_;
 };
 
 }

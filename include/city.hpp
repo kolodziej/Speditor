@@ -8,6 +8,11 @@ namespace speditor {
 
 class Base;
 class ClientCompany;
+class Cargo;
+
+using BasePtr = std::shared_ptr<Base>;
+using ClientCompanyPtr = std::shared_ptr<ClientCompany>;
+using CargoPtr = std::shared_ptr<Cargo>;
 
 class City :
 	public Node
@@ -16,10 +21,12 @@ public:
 	City(std::string, int, int);
 
 	std::string name();
-	std::vector<std::shared_ptr<Base>> bases();
-	bool addBase(std::shared_ptr<Base>);
-	std::vector<std::shared_ptr<ClientCompany>> clientCompanies();
-	bool addClientCompany(std::shared_ptr<ClientCompany>);
+	std::vector<BasePtr> bases();
+	bool addBase(BasePtr);
+	std::vector<ClientCompanyPtr> clientCompanies();
+	bool addClientCompany(ClientCompanyPtr);
+
+	std::vector<CargoPtr> getAllCargos();
 
 	virtual NodeType type()
 	{
@@ -31,9 +38,8 @@ private:
 	int max_bases_;
 	int max_client_companies_;
 
-	std::vector<std::shared_ptr<Base>> bases_;
-	std::vector<std::shared_ptr<ClientCompany>> client_companies_;
-
+	std::vector<BasePtr> bases_;
+	std::vector<ClientCompanyPtr> client_companies_;
 };
 
 }

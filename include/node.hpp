@@ -8,6 +8,10 @@
 
 namespace speditor {
 
+class Road;
+
+using RoadPtr = std::shared_ptr<Road>;
+
 class Node
 {
 public:

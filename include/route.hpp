@@ -9,20 +9,23 @@ class Node;
 class Road;
 class Map;
 
+using NodePtr = std::shared_ptr<Node>;
+using RoadPtr = std::shared_ptr<Road>;
+
 class Route
 {
 public:
-	Route(std::shared_ptr<Node>, std::shared_ptr<Node>);
+	Route(NodePtr, NodePtr);
 
-	std::vector<std::shared_ptr<Node>> getAllNodes();
-	void addMiddleNode(std::shared_ptr<Node>);
-	bool removeMiddleNode(std::shared_ptr<Node>);
+	std::vector<NodePtr> getAllNodes();
+	void addMiddleNode(NodePtr);
+	bool removeMiddleNode(NodePtr);
 
 private:
-	std::shared_ptr<Node> start_node_;
-	std::shared_ptr<Node> end_node_;
-	std::vector<std::shared_ptr<Node>> middle_nodes_;
-	std::vector<std::shared_ptr<Road>> roads_;
+	NodePtr start_node_;
+	NodePtr end_node_;
+	std::vector<NodePtr> middle_nodes_;
+	std::vector<RoadPtr> roads_;
 
 	friend class Map;
 };
