@@ -5,6 +5,10 @@
 
 namespace speditor {
 
+Map::Map() :
+	last_node_id_{0}
+{}
+
 void Map::addNode(NodePtr node)
 {
 	nodes_.insert(std::make_pair(node->id(), node));

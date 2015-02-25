@@ -20,6 +20,8 @@ using Path = std::pair<NodePtr,NodePtr>;
 class Map
 {
 public:
+	Map();
+
 	void addNode(NodePtr);
 	Route calcRoute(std::vector<NodePtr>);
 	void calcRoadsParams();
