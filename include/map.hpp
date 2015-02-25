@@ -4,6 +4,7 @@
 #include <map>
 #include <memory>
 #include <istream>
+#include <mutex>
 
 #include "road.hpp"
 #include "route.hpp"
@@ -28,6 +29,7 @@ public:
 private:
 	NodeId last_node_id_;
 
+	Route findShortestRoute_(NodePtr, NodePtr);
 	Route algDijkstra_(NodePtr, NodePtr);
 	std::map<NodeId, NodePtr> nodes_;
 	std::map<Path, Route> routes_;

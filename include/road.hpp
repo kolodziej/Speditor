@@ -15,13 +15,14 @@ class Road
 public:
 	Road() {}
 
-	double length() const;
+	int length() const;
 	int maxSpeed() const;
 	int averageSpeed() const;
+	int time() const;
 	NodePtr destination() const;
 
 private:
-	double length_;
+	int length_;
 	int max_speed_;
 	int average_speed_;
 	double traffic_;
