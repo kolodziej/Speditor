@@ -7,6 +7,10 @@
 
 #include "log_type.hpp"
 
+#define GL global_logger
+
+#include "log_macros.hpp"
+
 namespace speditor { namespace tools {
 
 class Logger
@@ -37,5 +41,7 @@ private:
 } }
 
 #include "impl/tools/logger.hpp"
+
+extern speditor::tools::Logger global_logger;
 
 #endif
