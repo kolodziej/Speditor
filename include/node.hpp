@@ -8,19 +8,24 @@
 
 namespace speditor {
 
+class Map;
 class Road;
 
 using RoadPtr = std::shared_ptr<Road>;
+using NodeId = unsigned long long;
 
 class Node
 {
 public:
-	Node() {}
+	Node(Map&);
+	NodeId id() const;
 	virtual NodeType type() = 0;
-	void addRoad(std::shared_ptr<Road>);
+	void addRoad(RoadPtr);
+	std::vector<RoadPtr> roads();
 
 private:
-	std::vector<std::shared_ptr<Road>> roads_;
+	NodeId id_;
+	std::vector<RoadPtr> roads_;
 };
 
 }

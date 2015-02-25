@@ -1,6 +1,7 @@
 #ifndef SPEDITOR_MAP_HPP
 #define SPEDITOR_MAP_HPP
 #include <vector>
+#include <map>
 #include <memory>
 #include <istream>
 
@@ -21,10 +22,12 @@ public:
 	void calcRoute(RoutePtr);
 	void calcRoadsParams();
 
-private:
-	std::vector<RoadPtr> algDijkstra_(NodePtr, NodePtr);
+	NodeId nextNodeId();
 
-	std::vector<NodePtr> nodes_;
+private:
+	NodeId last_node_id_;
+	std::vector<RoadPtr> algDijkstra_(NodePtr, NodePtr);
+	std::map<NodeId, NodePtr> nodes_;
 };
 
 }

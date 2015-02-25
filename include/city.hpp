@@ -6,6 +6,7 @@
 
 namespace speditor {
 
+class Map;
 class Base;
 class ClientCompany;
 class Cargo;
@@ -18,7 +19,7 @@ class City :
 	public Node
 {
 public:
-	City(std::string, int, int);
+	City(Map&, std::string, int, int);
 
 	std::string name();
 	std::vector<BasePtr> bases();

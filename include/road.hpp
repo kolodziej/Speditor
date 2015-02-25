@@ -5,6 +5,7 @@
 
 namespace speditor {
 
+class Map;
 class Node;
 
 using NodePtr = std::shared_ptr<Node>;
@@ -14,12 +15,18 @@ class Road
 public:
 	Road() {}
 
+	double length() const;
+	int maxSpeed() const;
+	int averageSpeed() const;
+
 private:
-	int length_;
+	double length_;
 	int max_speed_;
-	int avarage_speed_;
+	int average_speed_;
 	double traffic_;
 	NodePtr destination_;
+
+friend class Map;
 };
 
 }
