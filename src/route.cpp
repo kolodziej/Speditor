@@ -2,6 +2,7 @@
 
 #include "road.hpp"
 #include <algorithm>
+#include <iostream>
 
 namespace speditor {
 
@@ -34,4 +35,41 @@ NodePtr Route::endNode()
 	return roads_.back()->destination();
 }
 
+Route Route::operator+(Route right)
+{
+	Route left = *this;
+	if (left.endNode() == right.startNode())
+	{
+		for (auto road : right.roads())
+		{
+			left.addRoad_(road);
+		}
+	} else
+	{
+		// throw proper exception
+	}
+
+	return left;
+}
+
+Route& Route::operator+=(Route right)
+{
+	if (endNode() == right.startNode())
+	{
+		for (auto road : right.roads())
+		{
+			addRoad_(road);
+		}
+	} else
+	{
+		// throw proper exception
+	}
+
+	return *this;
+}
+	
+void Route::addRoad_(RoadPtr road)
+{
+	roads_.push_back(road);
+}
 }

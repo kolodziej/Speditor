@@ -20,7 +20,6 @@ void Node::addRoad(RoadPtr road)
 
 std::vector<RoadPtr> Node::roads()
 {
-	std::vector<RoadPtr> roads = roads_;
 	return roads_;
 }
 

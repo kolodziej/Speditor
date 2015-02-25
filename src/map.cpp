@@ -98,7 +98,7 @@ Route Map::algDijkstra_(NodePtr begin, NodePtr end)
 
 	std::vector<RoadPtr> roads;
 	NodePtr node;
-	for (node = end; node != nullptr; node = node->previous_node_)
+	for (node = end; node->previous_node_ != nullptr; node = node->previous_node_)
 	{
 		roads.insert(roads.begin(), node->road_);
 	}

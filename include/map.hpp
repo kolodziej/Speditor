@@ -3,7 +3,6 @@
 #include <vector>
 #include <map>
 #include <memory>
-#include <istream>
 #include <mutex>
 
 #include "road.hpp"

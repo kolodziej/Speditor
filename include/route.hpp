@@ -22,7 +22,7 @@ public:
 	NodePtr startNode();
 	NodePtr endNode();
 
-	Route& operator+(Route);
+	Route operator+(Route);
 	Route& operator+=(Route);
 
 private:

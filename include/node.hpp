@@ -19,6 +19,7 @@ class Node
 {
 public:
 	Node(Map&);
+	Node(const Node&) = delete;
 	NodeId id() const;
 	virtual NodeType type() = 0;
 	void addRoad(RoadPtr);
