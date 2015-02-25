@@ -4,6 +4,8 @@
 #include <algorithm>
 #include <iostream>
 
+#include "tools/logger.hpp"
+
 namespace speditor {
 
 Route::Route(NodePtr start_node) :
@@ -38,7 +40,7 @@ NodePtr Route::endNode()
 Route Route::operator+(Route right)
 {
 	Route left = *this;
-	if (left.endNode() == right.startNode())
+	if (left.endNode() == right.startNode() || left.roads_.empty())
 	{
 		for (auto road : right.roads())
 		{
@@ -54,7 +56,7 @@ Route Route::operator+(Route right)
 
 Route& Route::operator+=(Route right)
 {
-	if (endNode() == right.startNode())
+	if (endNode() == right.startNode() || roads_.empty())
 	{
 		for (auto road : right.roads())
 		{

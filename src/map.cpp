@@ -3,6 +3,8 @@
 #include <limits>
 #include <queue>
 
+#include "tools/logger.hpp"
+
 namespace speditor {
 
 Map::Map() :
@@ -50,6 +52,7 @@ NodeId Map::nextNodeId()
 
 Route Map::findShortestRoute_(NodePtr begin, NodePtr end)
 {
+	LogInfo("Finding shortest route");
 	auto route_it = routes_.find(std::make_pair(begin, end));
 	if (route_it == routes_.end())
 	{
@@ -100,6 +103,7 @@ Route Map::algDijkstra_(NodePtr begin, NodePtr end)
 	NodePtr node;
 	for (node = end; node->previous_node_ != nullptr; node = node->previous_node_)
 	{
+		LogInfo("Inserting road: ", reinterpret_cast<void*>(node->road_.get()));
 		roads.insert(roads.begin(), node->road_);
 	}
 

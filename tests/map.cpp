@@ -1,6 +1,7 @@
 #include "gtest/gtest.h"
 #include "map.hpp"
 #include "city.hpp"
+#include "tools/logger.hpp"
 
 #include <iostream>
 #include <memory>
@@ -9,6 +10,8 @@
 	auto road = std::make_shared<Road>(to, length, 90, speed); \
 	from->addRoad(road); \
 }
+
+speditor::tools::Logger global_logger(std::cerr, false, false);
 
 using namespace speditor;
 
@@ -27,7 +30,6 @@ TEST(Map, Dijkstra1)
 		std::make_shared<City>(map, "Pabianice", 100, 100),
 		std::make_shared<City>(map, "Berlin", 100, 100)
 	};
-
 	for (auto city : cities)
 	{
 		map.addNode(city);
@@ -42,16 +44,14 @@ TEST(Map, Dijkstra1)
 	ADD_ROAD(cities[1], cities[3], 900, 55);
 
 	Route route = map.calcRoute({ cities[0], cities[3] });
-	RoadPtr p[3] =
-	{
-		route.roads()[0],
-		route.roads()[1],
-		route.roads()[2]
-	};
 	ASSERT_EQ(route.startNode(), cities[0]);
 	ASSERT_EQ(route.endNode(), cities[3]);
 	for (auto r : route.roads())
 	{
 		ASSERT_NE(r, nullptr);
 	}
+	auto roads = route.roads();
+	ASSERT_EQ(roads.size(), 2);
+	ASSERT_EQ(roads[0]->length(), 250);
+	ASSERT_EQ(roads[1]->length(), 800);
 }
