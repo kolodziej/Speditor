@@ -10,11 +10,11 @@ Road::Road() :
 	destination_{nullptr}
 {}
 
-Road::Road(NodePtr destination) :
-	length_{},
-	max_speed_{90},
-	average_speed_{60},
-	traffic_{1.00},
+Road::Road(NodePtr destination, int length, int max_speed, int average_speed, double traffic) :
+	length_{length},
+	max_speed_{max_speed},
+	average_speed_{average_speed},
+	traffic_{traffic},
 	destination_{destination}
 {}
 
