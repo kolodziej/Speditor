@@ -16,6 +16,14 @@ void Map::addNode(NodePtr node)
 	nodes_.insert(std::make_pair(node->id(), node));
 }
 
+void Map::addRoad(NodePtr node, RoadPtr road)
+{
+	node->addRoad(road);
+	RoadPtr neg_direction = std::make_shared<Road>(*(road.get()));
+	neg_direction->destination_ = node;
+	road->destination()->addRoad(neg_direction);
+}
+
 Route Map::calcRoute(std::vector<NodePtr> nodes)
 {
 	if (nodes.size() > 1)

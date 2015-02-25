@@ -22,6 +22,7 @@ public:
 	Map();
 
 	void addNode(NodePtr);
+	void addRoad(NodePtr, RoadPtr);
 	Route calcRoute(std::vector<NodePtr>);
 	void calcRoadsParams();
 

@@ -14,7 +14,6 @@ class Road
 {
 public:
 	Road();
-	Road(const Road&) = delete;
 	Road(NodePtr, int length = 0, int max_speed = 90, int average_speed = 60, double traffic = 1.0);
 
 	int length() const;
