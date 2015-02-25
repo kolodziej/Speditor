@@ -13,7 +13,8 @@ using NodePtr = std::shared_ptr<Node>;
 class Road
 {
 public:
-	Road() {}
+	Road();
+	Road(NodePtr);
 
 	int length() const;
 	int maxSpeed() const;
