@@ -99,7 +99,9 @@ Route Map::algDijkstra_(NodePtr begin, NodePtr end)
 		roads.insert(roads.begin(), node->road_);
 	}
 
-	return Route(node, roads);
+	Route route(node, roads);
+	routes_.insert(std::make_pair(std::make_pair(begin, end), route));
+	return route;
 }
 
 }
