@@ -7,19 +7,20 @@ void Map::addNode(NodePtr node)
 	nodes_.insert(std::make_pair(node->id(), node));
 }
 
-void Map::calcRoute(RoutePtr route)
+Route Map::calcRoute(std::vector<NodePtr> nodes)
 {
-	route->roads_.clear();
-	std::vector<NodePtr> nodes = std::move(route->getAllNodes());
-	if (nodes.empty() == false)
+	if (nodes.size() > 1)
 	{
+		Route rt(nodes.front());
 		for (auto it = nodes.begin() + 1; it != nodes.end(); ++it)
 		{
-			for (auto road : algDijkstra_(*(it-1), *it))
-			{
-				route->roads_.push_back(road);
-			}
+			rt += algDijkstra_(*(it-1), *it);
 		}
+
+		return rt;
+	} else
+	{
+		// throw proper exception
 	}
 }
 
@@ -40,7 +41,7 @@ NodeId Map::nextNodeId()
 	return ++last_node_id_;
 }
 
-std::vector<RoadPtr> Map::algDijkstra_(NodePtr begin, NodePtr end)
+Route Map::algDijkstra_(NodePtr begin, NodePtr end)
 {
 	// use Dijkstra algorithm to find shortest path from begin to end
 }

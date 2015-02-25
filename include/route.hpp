@@ -15,17 +15,21 @@ using RoadPtr = std::shared_ptr<Road>;
 class Route
 {
 public:
-	Route(NodePtr, NodePtr);
+	Route(NodePtr start_node);
+	Route(NodePtr start_node, std::vector<RoadPtr>);
 
-	std::vector<NodePtr> getAllNodes();
-	void addMiddleNode(NodePtr);
-	bool removeMiddleNode(NodePtr);
+	std::vector<RoadPtr> roads();
+	NodePtr startNode();
+	NodePtr endNode();
+
+	Route& operator+(Route);
+	Route& operator+=(Route);
 
 private:
 	NodePtr start_node_;
-	NodePtr end_node_;
-	std::vector<NodePtr> middle_nodes_;
 	std::vector<RoadPtr> roads_;
+
+	void addRoad_(RoadPtr);
 
 	friend class Map;
 };

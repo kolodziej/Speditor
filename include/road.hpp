@@ -18,6 +18,7 @@ public:
 	double length() const;
 	int maxSpeed() const;
 	int averageSpeed() const;
+	NodePtr destination() const;
 
 private:
 	double length_;

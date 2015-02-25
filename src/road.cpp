@@ -17,4 +17,9 @@ int Road::averageSpeed() const
 	return average_speed_;
 }
 
+NodePtr Road::destination() const
+{
+	return destination_;
+}
+
 }

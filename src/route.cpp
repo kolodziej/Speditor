@@ -1,38 +1,37 @@
 #include "route.hpp"
 
+#include "road.hpp"
 #include <algorithm>
 
 namespace speditor {
 
-Route::Route(NodePtr start_node, NodePtr end_node) :
-	start_node_(start_node),
-	end_node_(end_node)
+Route::Route(NodePtr start_node) :
+	start_node_(start_node)
 {}
 
-std::vector<NodePtr> Route::getAllNodes()
-{
-	std::vector<NodePtr> v = middle_nodes_;
-	v.insert(v.begin(), start_node_);
-	v.push_back(end_node_);
+Route::Route(NodePtr start_node, std::vector<RoadPtr> roads) :
+	start_node_(start_node),
+	roads_(roads)
+{}
 
-	return v;
+std::vector<RoadPtr> Route::roads()
+{
+	return roads_;
 }
 
-void Route::addMiddleNode(NodePtr node)
+NodePtr Route::startNode()
 {
-	middle_nodes_.push_back(node);
+	return start_node_;
 }
 
-bool Route::removeMiddleNode(NodePtr node)
+NodePtr Route::endNode()
 {
-	auto it = std::find(middle_nodes_.begin(), middle_nodes_.end(), node);
-	if (it != middle_nodes_.end())
+	if (roads_.empty())
 	{
-		middle_nodes_.erase(it);
-		return true;
+		return nullptr;
 	}
 
-	return false;
+	return roads_.back()->destination();
 }
 
 }
