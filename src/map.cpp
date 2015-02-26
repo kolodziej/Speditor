@@ -13,6 +13,7 @@ Map::Map() :
 
 void Map::addNode(NodePtr node)
 {
+	node->setId_(nextNodeId_());
 	nodes_.insert(std::make_pair(node->id(), node));
 }
 
@@ -31,7 +32,7 @@ Route Map::calcRoute(std::vector<NodePtr> nodes)
 		Route rt(nodes.front());
 		for (auto it = nodes.begin() + 1; it != nodes.end(); ++it)
 		{
-			rt += algDijkstra_(*(it-1), *it);
+			rt += findShortestRoute_(*(it-1), *it);
 		}
 
 		return rt;
@@ -53,14 +54,13 @@ void Map::calcRoadsParams()
 	}
 }
 
-NodeId Map::nextNodeId()
+NodeId Map::nextNodeId_()
 {
 	return ++last_node_id_;
 }
 
 Route Map::findShortestRoute_(NodePtr begin, NodePtr end)
 {
-	LogInfo("Finding shortest route");
 	auto route_it = routes_.find(std::make_pair(begin, end));
 	if (route_it == routes_.end())
 	{
@@ -111,7 +111,6 @@ Route Map::algDijkstra_(NodePtr begin, NodePtr end)
 	NodePtr node;
 	for (node = end; node->previous_node_ != nullptr; node = node->previous_node_)
 	{
-		LogInfo("Inserting road: ", reinterpret_cast<void*>(node->road_.get()));
 		roads.insert(roads.begin(), node->road_);
 	}
 

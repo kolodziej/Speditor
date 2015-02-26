@@ -26,11 +26,10 @@ public:
 	Route calcRoute(std::vector<NodePtr>);
 	void calcRoadsParams();
 
-	NodeId nextNodeId();
-
 private:
 	NodeId last_node_id_;
 
+	NodeId nextNodeId_();
 	Route findShortestRoute_(NodePtr, NodePtr);
 	Route algDijkstra_(NodePtr, NodePtr);
 	std::map<NodeId, NodePtr> nodes_;
