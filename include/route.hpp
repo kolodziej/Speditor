@@ -26,6 +26,11 @@ public:
 	int length() const;
 	int time() const;
 
+	inline operator bool() const
+	{
+		return continuous();
+	}
+
 private:
 	NodePtr start_node_;
 	std::vector<RoadPtr> roads_;
