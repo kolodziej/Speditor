@@ -18,7 +18,7 @@ using NodeId = unsigned long long;
 class Node
 {
 public:
-	Node(Map&);
+	Node();
 	Node(const Node&) = delete;
 	NodeId id() const;
 	virtual NodeType type() = 0;
@@ -33,6 +33,8 @@ private:
 	int time_;
 	RoadPtr road_;
 	NodePtr previous_node_;
+
+	void setId_(NodeId);
 
 friend class Map;
 };

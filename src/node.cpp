@@ -4,8 +4,8 @@
 
 namespace speditor {
 
-Node::Node(Map& map) :
-	id_(map.nextNodeId())
+Node::Node() :
+	id_{0}
 {}
 
 NodeId Node::id() const
@@ -21,6 +21,15 @@ void Node::addRoad(RoadPtr road)
 std::vector<RoadPtr> Node::roads()
 {
 	return roads_;
+}
+
+void Node::setId_(NodeId id)
+{
+	if (id_ != 0)
+	{
+		// throw exception
+	}
+	id_ = id;
 }
 
 }

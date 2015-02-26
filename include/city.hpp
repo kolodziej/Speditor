@@ -19,7 +19,7 @@ class City :
 	public Node
 {
 public:
-	City(Map&, std::string, int, int);
+	City(std::string, int = 1000, int = 1000);
 
 	std::string name();
 	std::vector<BasePtr> bases();
