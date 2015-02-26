@@ -1,5 +1,6 @@
 #include "route.hpp"
 
+#include "node.hpp"
 #include "road.hpp"
 #include <algorithm>
 #include <iostream>
@@ -17,17 +18,17 @@ Route::Route(NodePtr start_node, std::vector<RoadPtr> roads) :
 	roads_(roads)
 {}
 
-std::vector<RoadPtr> Route::roads()
+std::vector<RoadPtr> Route::roads() const
 {
 	return roads_;
 }
 
-NodePtr Route::startNode()
+NodePtr Route::startNode() const
 {
 	return start_node_;
 }
 
-NodePtr Route::endNode()
+NodePtr Route::endNode() const
 {
 	if (roads_.empty())
 	{
@@ -37,41 +38,72 @@ NodePtr Route::endNode()
 	return roads_.back()->destination();
 }
 
-Route Route::operator+(Route right)
-{
-	Route left = *this;
-	if (left.endNode() == right.startNode() || left.roads_.empty())
-	{
-		for (auto road : right.roads())
-		{
-			left.addRoad_(road);
-		}
-	} else
-	{
-		// throw proper exception
-	}
-
-	return left;
-}
-
 Route& Route::operator+=(Route right)
 {
-	if (endNode() == right.startNode() || roads_.empty())
+	for (auto road : right.roads())
 	{
-		for (auto road : right.roads())
-		{
-			addRoad_(road);
-		}
-	} else
+		addRoad_(road);
+	}
+	return *this;
+}
+
+bool Route::continuous() const
+{
+	if (roads_.empty())
 	{
-		// throw proper exception
+		return true;
 	}
 
-	return *this;
+	bool c = true;
+	NodePtr node = startNode();
+	auto road = roads_.begin();
+	while (c && road != roads_.end())
+	{
+		bool in = false;
+		for (auto r : node->roads())
+		{
+			if (r == *road)
+			{
+				in = true;
+				node = r->destination();
+				++road;
+				break;
+			}
+		}
+		if (in == false)
+		{
+			c = false;
+		}
+	}
+
+	return c;
+}
+
+int Route::length() const
+{
+	int length = 0;
+	for (auto r : roads_)
+	{
+		length += r->length();
+	}
+
+	return length;
+}
+
+int Route::time() const
+{
+	int time = 0;
+	for (auto r : roads_)
+	{
+		time += r->time();
+	}
+
+	return time;
 }
 	
 void Route::addRoad_(RoadPtr road)
 {
 	roads_.push_back(road);
 }
+
 }

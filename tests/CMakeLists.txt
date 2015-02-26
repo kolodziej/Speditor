@@ -20,3 +20,6 @@ target_link_libraries(logger "${LIBRARIES}")
 
 add_executable(map map.cpp)
 target_link_libraries(map "${LIBRARIES}")
+
+add_executable(route route.cpp)
+target_link_libraries(route "${LIBRARIES}")

@@ -18,12 +18,13 @@ public:
 	Route(NodePtr start_node);
 	Route(NodePtr start_node, std::vector<RoadPtr>);
 
-	std::vector<RoadPtr> roads();
-	NodePtr startNode();
-	NodePtr endNode();
-
-	Route operator+(Route);
+	std::vector<RoadPtr> roads() const;
+	NodePtr startNode() const;
+	NodePtr endNode() const;
 	Route& operator+=(Route);
+	bool continuous() const;
+	int length() const;
+	int time() const;
 
 private:
 	NodePtr start_node_;
@@ -31,8 +32,11 @@ private:
 
 	void addRoad_(RoadPtr);
 
-	friend class Map;
+friend class Map;
+friend Route operator+(Route, Route);
 };
+
+Route operator+(Route, Route);
 
 }
 
