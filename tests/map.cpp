@@ -3,6 +3,8 @@
 #include "city.hpp"
 #include "tools/logger.hpp"
 
+#include "routing_policy/policies.hpp"
+
 #include <iostream>
 #include <memory>
 
@@ -47,7 +49,8 @@ protected:
 
 TEST_F(MapTest, Dijkstra1)
 {
-	Route route = map.calcRoute({ cities[0], cities[3] });
+	routing_policy::Fastest policy;
+	Route route = map.getRoute(policy, { cities[0], cities[3] });
 	ASSERT_EQ(route.startNode(), cities[0]);
 	ASSERT_EQ(route.endNode(), cities[3]);
 	ASSERT_TRUE(route.continuous());
@@ -59,7 +62,8 @@ TEST_F(MapTest, Dijkstra1)
 
 TEST_F(MapTest, Dijkstra2)
 {
-	Route route = map.calcRoute({ cities[0], cities[2], cities[3] });
+	routing_policy::Fastest policy;
+	Route route = map.getRoute(policy, { cities[0], cities[2], cities[3] });
 	ASSERT_EQ(route.startNode(), cities[0]);
 	ASSERT_EQ(route.endNode(), cities[3]);
 	ASSERT_TRUE(route.continuous());
@@ -86,8 +90,8 @@ TEST_F(MapTest, Dijkstra3)
 	ADD_ROAD(cities[2], cities[5], 60, 75);
 	ADD_ROAD(cities[2], cities[5], 50, 60);
 
-	LogInfo("Finding shortest route through: ", cities[3]->id(), ", ", cities[2]->id(), ", ", cities[4]->id(), ", ", cities[5]->id(), ", ", cities[0]->id());
-	Route route = map.calcRoute({ cities[3], cities[2], cities[4], cities[5], cities[0] });
+	routing_policy::Fastest policy;
+	Route route = map.getRoute(policy, { cities[3], cities[2], cities[4], cities[5], cities[0] });
 	auto roads = route.roads();
 	ASSERT_TRUE(route.continuous());
 	ASSERT_EQ(roads.size(), 8);

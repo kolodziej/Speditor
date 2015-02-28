@@ -20,6 +20,7 @@ public:
 	int maxSpeed() const;
 	int averageSpeed() const;
 	int time() const;
+	double traffic() const;
 	NodePtr destination() const;
 
 private:

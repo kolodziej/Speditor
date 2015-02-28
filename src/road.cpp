@@ -38,6 +38,11 @@ int Road::time() const
 	return length() / averageSpeed();
 }
 
+double Road::traffic() const
+{
+	return traffic_;
+}
+
 NodePtr Road::destination() const
 {
 	return destination_;

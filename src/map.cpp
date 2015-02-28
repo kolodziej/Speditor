@@ -2,6 +2,7 @@
 
 #include <limits>
 #include <queue>
+#include <typeinfo>
 
 #include "tools/logger.hpp"
 
@@ -25,14 +26,14 @@ void Map::addRoad(NodePtr node, RoadPtr road)
 	road->destination()->addRoad(neg_direction);
 }
 
-Route Map::calcRoute(std::vector<NodePtr> nodes)
+Route Map::getRoute(routing_policy::Abstract& policy, std::vector<NodePtr> nodes)
 {
 	if (nodes.size() > 1)
 	{
 		Route rt(nodes.front());
 		for (auto it = nodes.begin() + 1; it != nodes.end(); ++it)
 		{
-			rt += findShortestRoute_(*(it-1), *it);
+			rt += findShortestRoute_(policy, *(it-1), *it);
 		}
 
 		return rt;
@@ -59,18 +60,18 @@ NodeId Map::nextNodeId_()
 	return ++last_node_id_;
 }
 
-Route Map::findShortestRoute_(NodePtr begin, NodePtr end)
+Route Map::findShortestRoute_(routing_policy::Abstract& policy, NodePtr begin, NodePtr end)
 {
-	auto route_it = routes_.find(std::make_pair(begin, end));
+	auto route_it = routes_.find(std::make_tuple(begin, end, typeid(policy).hash_code()));
 	if (route_it == routes_.end())
 	{
-		return algDijkstra_(begin, end);
+		return algDijkstra_(policy, begin, end);
 	}
 
 	return route_it->second;
 }
 
-Route Map::algDijkstra_(NodePtr begin, NodePtr end)
+Route Map::algDijkstra_(routing_policy::Abstract& policy, NodePtr begin, NodePtr end)
 {
 	for (auto node : nodes_)
 	{
@@ -96,10 +97,10 @@ Route Map::algDijkstra_(NodePtr begin, NodePtr end)
 		queue.pop();
 		for (auto road : node->roads())
 		{
-			if (road->destination()->time_ > node->time_ + road->time())
+			if (road->destination()->time_ > node->time_ + policy.getRoadWeight(road))
 			{
 				NodePtr destination = road->destination();
-				destination->time_ = node->time_ + road->time();
+				destination->time_ = node->time_ + policy.getRoadWeight(road);
 				destination->previous_node_ = node;
 				destination->road_ = road;
 				queue.push(destination);
@@ -115,7 +116,7 @@ Route Map::algDijkstra_(NodePtr begin, NodePtr end)
 	}
 
 	Route route(node, roads);
-	routes_.insert(std::make_pair(std::make_pair(begin, end), route));
+	routes_.insert(std::make_pair(std::make_tuple(begin, end, typeid(policy).hash_code()), route));
 	return route;
 }
 

@@ -23,7 +23,10 @@ set(SOURCES
 	"${SD}/src/route.cpp"
 	"${SD}/src/clock.cpp"
 	"${SD}/src/timepoint.cpp"
- "${SD}/src/tools/logger.cpp"
+	"${SD}/src/tools/logger.cpp"
+	"${SD}/src/routing_policy/shortest.cpp"
+	"${SD}/src/routing_policy/fastest.cpp"
+	"${SD}/src/routing_policy/economical.cpp"
 )
 
 set(HEADERS
@@ -38,6 +41,11 @@ set(HEADERS
 	"${SD}/include/tools/logger.hpp"
 	"${SD}/include/tools/log_type.hpp"
 	"${SD}/impl/tools/logger.hpp"
+	"${SD}/include/routing_policy/abstract.hpp"
+	"${SD}/include/routing_policy/policies.hpp"
+	"${SD}/include/routing_policy/shortest.hpp"
+	"${SD}/include/routing_policy/fastest.hpp"
+	"${SD}/include/routing_policy/economical.hpp"
 )
 
 add_library(Speditor STATIC ${HEADERS} ${SOURCES})
