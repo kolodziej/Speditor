@@ -32,6 +32,7 @@ set(SOURCES
 set(HEADERS
 	"${SD}/include/map.hpp"
 	"${SD}/include/city.hpp"
+	"${SD}/include/crossroads.hpp"
 	"${SD}/include/node.hpp"
 	"${SD}/include/node_type.hpp"
 	"${SD}/include/road.hpp"
