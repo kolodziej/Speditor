@@ -32,6 +32,7 @@ protected:
 		for (auto city : cities)
 		{
 			map.addNode(city);
+			map2.addNode(city);
 		}
 
 		ADD_ROAD(cities[0], cities[1], 200, 60);
@@ -44,6 +45,7 @@ protected:
 	}
 
 	Map map;
+	Map map2;
 	std::vector<std::shared_ptr<City>> cities;
 };
 
