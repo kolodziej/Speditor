@@ -10,7 +10,8 @@ class Node;
 
 using NodePtr = std::shared_ptr<Node>;
 
-class Road
+class Road :
+	public std::enable_shared_from_this<Road>
 {
 public:
 	Road();
