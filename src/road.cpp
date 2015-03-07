@@ -35,7 +35,7 @@ int Road::averageSpeed() const
 
 int Road::time() const
 {
-	return length() / averageSpeed();
+	return static_cast<double>(length()) / (static_cast<double>(averageSpeed()) / 60.0);
 }
 
 double Road::traffic() const
