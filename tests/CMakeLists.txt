@@ -29,3 +29,6 @@ target_link_libraries(traffic_policy "${LIBRARIES}")
 
 add_executable(timepoint timepoint.cpp)
 target_link_libraries(timepoint "${LIBRARIES}")
+
+add_executable(clock clock.cpp)
+target_link_libraries(clock Speditor pthread)
