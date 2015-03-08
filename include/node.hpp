@@ -30,7 +30,7 @@ private:
 	std::vector<RoadPtr> roads_;
 
 	// Dijkstra algorithm fields
-	int time_;
+	int weight_;
 	RoadPtr road_;
 	NodePtr previous_node_;
 

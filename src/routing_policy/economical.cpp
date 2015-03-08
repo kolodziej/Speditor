@@ -6,7 +6,7 @@ namespace speditor { namespace routing_policy {
 
 int Economical::getRoadWeight(RoadPtr road)
 {
-	return static_cast<int>(road->length() * (1.00 - road->traffic()));
+	return static_cast<double>(road->length()) * 0.7 + (road->maxSpeed() - road->averageSpeed()) * 0.3;
 }
 
 } }
