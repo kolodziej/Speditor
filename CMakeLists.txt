@@ -27,6 +27,8 @@ set(SOURCES
 	"${SD}/src/routing_policy/shortest.cpp"
 	"${SD}/src/routing_policy/fastest.cpp"
 	"${SD}/src/routing_policy/economical.cpp"
+	"${SD}/src/traffic_policy/chain.cpp"
+	"${SD}/src/traffic_policy/sinus.cpp"
 )
 
 set(HEADERS
@@ -47,6 +49,9 @@ set(HEADERS
 	"${SD}/include/routing_policy/shortest.hpp"
 	"${SD}/include/routing_policy/fastest.hpp"
 	"${SD}/include/routing_policy/economical.hpp"
+	"${SD}/include/traffic_policy/policy.hpp"
+	"${SD}/include/traffic_policy/chain.hpp"
+	"${SD}/include/traffic_policy/sinus.hpp"
 )
 
 add_library(Speditor STATIC ${HEADERS} ${SOURCES})

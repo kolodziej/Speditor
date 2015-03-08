@@ -24,5 +24,8 @@ target_link_libraries(map "${LIBRARIES}")
 add_executable(route route.cpp)
 target_link_libraries(route "${LIBRARIES}")
 
+add_executable(traffic_policy traffic_policy.cpp)
+target_link_libraries(traffic_policy "${LIBRARIES}")
+
 add_executable(timepoint timepoint.cpp)
 target_link_libraries(timepoint "${LIBRARIES}")
