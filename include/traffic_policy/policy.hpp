@@ -1,5 +1,5 @@
-#ifndef SPEDITOR_TRAFFIC_POLICY_ABSTRACT_HPP
-#define SPEDITOR_TRAFFIC_POLICY_ABSTRACT_HPP
+#ifndef SPEDITOR_TRAFFIC_POLICY_POLICY_HPP
+#define SPEDITOR_TRAFFIC_POLICY_POLICY_HPP
 #include <memory>
 
 namespace speditor {
@@ -8,7 +8,7 @@ class Timepoint;
 
 namespace traffic_policy {
 
-class Abstract
+class Policy
 {
 public:
 	virtual double traffic(Timepoint) = 0;
