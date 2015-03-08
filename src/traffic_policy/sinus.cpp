@@ -4,12 +4,16 @@
 
 namespace speditor { namespace traffic_policy {
 
+Sinus::Sinus(short rush_hour) :
+	rush_hour_{rush_hour}
+{}
+
 double Sinus::traffic(Timepoint tp)
 {
-	return sin(calcX_(tp.hour()));
+	return std::abs(std::sin(calcX_(tp.hour())));
 }
 
 constexpr double calcX_(short hour)
 {
-	return hour*M_PI/24;
+	return (12 - rush_hour_ + hour)*M_PI/24;
 }

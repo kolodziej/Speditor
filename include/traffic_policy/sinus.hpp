@@ -7,9 +7,12 @@ namespace speditor { namespace traffic_policy {
 class Sinus : public Policy
 {
 public:
+	Sinus(short);
 	virtual double traffic(Timepoint);
 private:
 	constexpr double calcX_(short);
+
+	short rush_hour_;
 };
 
 } }
