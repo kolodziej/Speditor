@@ -1,8 +1,10 @@
 #include "map.hpp"
+#include "timepoint.hpp"
 
 #include <limits>
 #include <queue>
 #include <typeinfo>
+#include <cmath>
 
 #include "tools/logger.hpp"
 
@@ -43,14 +45,15 @@ Route Map::getRoute(routing_policy::Abstract& policy, std::vector<NodePtr> nodes
 	}
 }
 
-void Map::calcRoadsParams()
+void Map::calcRoadsParams(Timepoint tp)
 {
 	for (auto node_pair : nodes_)
 	{
 		NodePtr node = node_pair.second;
 		for (auto road : node->roads())
 		{
-			road->average_speed_ = road->max_speed_ * (1.2 - road->traffic_);
+			road->traffic_ = road->policy_->traffic(tp);
+			road->average_speed_ = road->max_speed_ - std::exp(std::log(road->max_speed_) * road->traffic_); // average = max - (max ^ traffic);
 		}
 	}
 }
@@ -75,17 +78,17 @@ Route Map::algDijkstra_(routing_policy::Abstract& policy, NodePtr begin, NodePtr
 {
 	for (auto node : nodes_)
 	{
-		node.second->time_ = std::numeric_limits<int>::max();
+		node.second->weight_ = std::numeric_limits<int>::max();
 		node.second->previous_node_ = nullptr;
 		node.second->road_ = nullptr;
 	}
 	
-	begin->time_ = 0;
+	begin->weight_ = 0;
 	struct less_node
 	{
 		bool operator()(NodePtr a, NodePtr b)
 		{
-			return (a->time_ == b->time_) ? a->id() < b->id() : a->time_ < b->time_;
+			return (a->weight_ == b->weight_) ? a->id() < b->id() : a->weight_ < b->weight_;
 		}
 	};
 	std::priority_queue<NodePtr, std::vector<NodePtr>, less_node> queue;
@@ -97,10 +100,10 @@ Route Map::algDijkstra_(routing_policy::Abstract& policy, NodePtr begin, NodePtr
 		queue.pop();
 		for (auto road : node->roads())
 		{
-			if (road->destination()->time_ > node->time_ + policy.getRoadWeight(road))
+			if (road->destination()->weight_ > node->weight_ + policy.getRoadWeight(road))
 			{
 				NodePtr destination = road->destination();
-				destination->time_ = node->time_ + policy.getRoadWeight(road);
+				destination->weight_ = node->weight_ + policy.getRoadWeight(road);
 				destination->previous_node_ = node;
 				destination->road_ = road;
 				queue.push(destination);

@@ -1,21 +1,37 @@
 #include "gtest/gtest.h"
 #include "map.hpp"
 #include "city.hpp"
+#include "timepoint.hpp"
 #include "tools/logger.hpp"
 
 #include "routing_policy/policies.hpp"
+#include "traffic_policy/policy.hpp"
 
 #include <iostream>
 #include <memory>
 
-#define AR(map, from, to, length, speed) { \
-	auto road = std::make_shared<Road>(to, length, 90, speed); \
+using namespace speditor;
+
+class PolicyPercent : public traffic_policy::Policy
+{
+public:
+	PolicyPercent(double traffic) :
+		traffic_{traffic}
+	{}
+	virtual double traffic(Timepoint /*unused*/)
+	{
+		return traffic_;
+	}
+private:
+	double traffic_;
+};
+
+#define AR(map, from, to, length, speed, percent) { \
+	auto road = std::make_shared<Road>(to, length, speed, std::shared_ptr<traffic_policy::Policy>(new PolicyPercent(percent))); \
 	map.addRoad(from, road); \
 }
 
 speditor::tools::Logger global_logger(std::cerr, false, false);
-
-using namespace speditor;
 
 std::string roadsStr(std::vector<std::shared_ptr<Road>> roads)
 {
@@ -37,10 +53,10 @@ protected:
 		// map
 		cities =
 		{
-			std::make_shared<City>("Warsaw", 100, 100),
-			std::make_shared<City>("Lodz", 100, 100),
-			std::make_shared<City>("Pabianice", 100, 100),
-			std::make_shared<City>("Berlin", 100, 100)
+			std::make_shared<City>("Warsaw"),
+			std::make_shared<City>("Lodz"),
+			std::make_shared<City>("Pabianice"),
+			std::make_shared<City>("Berlin")
 		};
 		for (auto city : cities)
 		{
@@ -48,13 +64,13 @@ protected:
 			map2.addNode(city);
 		}
 
-		AR(map, cities[0], cities[1], 200, 60);
-		AR(map, cities[0], cities[1], 250, 85);
-		AR(map, cities[1], cities[2], 30, 85);
-		AR(map, cities[1], cities[2], 20, 60);
-		AR(map, cities[1], cities[2], 25, 63);
-		AR(map, cities[1], cities[3], 800, 80);
-		AR(map, cities[1], cities[3], 900, 55);
+		AR(map, cities[0], cities[1], 200, 60, 0.0);
+		AR(map, cities[0], cities[1], 250, 85, 0.0);
+		AR(map, cities[1], cities[2], 30, 85, 0.0);
+		AR(map, cities[1], cities[2], 20, 60, 0.0);
+		AR(map, cities[1], cities[2], 25, 63, 0.0);
+		AR(map, cities[1], cities[3], 800, 80, 0.0);
+		AR(map, cities[1], cities[3], 900, 55, 0.0);
 
 		// map2
 		nodes = {
@@ -68,9 +84,9 @@ protected:
 			map2.addNode(node);
 		}
 
-		AR(map2, nodes[0], nodes[1], 30, 70);
-		AR(map2, nodes[1], nodes[2], 20, 70);
-		AR(map2, nodes[2], nodes[0], 35, 36);
+		AR(map2, nodes[0], nodes[1], 30, 70, 0.0);
+		AR(map2, nodes[1], nodes[2], 20, 70, 0.0);
+		AR(map2, nodes[2], nodes[0], 35, 36, 0.0);
 	}
 
 	Map map;

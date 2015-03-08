@@ -2,6 +2,7 @@
 #define SPEDITOR_ROAD_HPP
 #include <memory>
 
+#include "traffic_policy/policy.hpp"
 
 namespace speditor {
 
@@ -10,12 +11,11 @@ class Node;
 
 using NodePtr = std::shared_ptr<Node>;
 
-class Road :
-	public std::enable_shared_from_this<Road>
+class Road
 {
 public:
 	Road();
-	Road(NodePtr, int length = 0, int max_speed = 90, int average_speed = 60, double traffic = 1.0);
+	Road(NodePtr, int length = 0, int max_speed = 90, std::shared_ptr<traffic_policy::Policy> policy = nullptr);
 
 	int length() const;
 	int maxSpeed() const;
@@ -30,6 +30,7 @@ private:
 	int average_speed_;
 	double traffic_;
 	NodePtr destination_;
+	std::shared_ptr<traffic_policy::Policy> policy_;
 
 friend class Map;
 };

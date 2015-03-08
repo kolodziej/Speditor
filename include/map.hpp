@@ -18,6 +18,8 @@ using RoadPtr = std::shared_ptr<Road>;
 
 using Path = std::tuple<NodePtr, NodePtr, size_t>;
 
+class Timepoint;
+
 class Map
 {
 public:
@@ -26,7 +28,7 @@ public:
 	void addNode(NodePtr);
 	void addRoad(NodePtr, RoadPtr);
 	Route getRoute(routing_policy::Abstract&, std::vector<NodePtr>);
-	void calcRoadsParams();
+	void calcRoadsParams(Timepoint);
 
 private:
 	NodeId last_node_id_;
