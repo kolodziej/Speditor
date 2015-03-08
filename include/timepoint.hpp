@@ -7,15 +7,16 @@ class Timepoint
 {
 public:
 	Timepoint() {}
+	Timepoint(long long);
 
 	void set(long long);
 	long long get() const;
 
-	short minute();
-	short hour();
-	int day();
-	short dayOfWeek();
-	int week();
+	short minute() const;
+	short hour() const;
+	int day() const;
+	short dayOfWeek() const;
+	int week() const;
 
 private:
 	long long time_;

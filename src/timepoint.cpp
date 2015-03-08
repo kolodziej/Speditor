@@ -1,8 +1,13 @@
 #include "timepoint.hpp"
 
+#include <cmath>
 #include "clock.hpp"
 
 namespace speditor {
+
+Timepoint::Timepoint(long long time) :
+	time_{time}
+{}
 
 void Timepoint::set(long long time)
 {
@@ -14,29 +19,29 @@ long long Timepoint::get() const
 	return time_;
 }
 
-short Timepoint::minute()
+short Timepoint::minute() const
 {
 	return time_ % 60;
 }
 
-short Timepoint::hour()
+short Timepoint::hour() const
 {
 	return static_cast<short>(static_cast<int>(time_ / 60) % 24);
 }
 
-int Timepoint::day()
+int Timepoint::day() const
 {
-	return static_cast<int>(time_ / 1440);
+	return std::ceil(static_cast<double>(time_) / 1440.0);
 }
 
-short Timepoint::dayOfWeek()
+short Timepoint::dayOfWeek() const
 {
-	return static_cast<short>(day() % 7);
+	return static_cast<short>((day()-1) % 7);
 }
 
-int Timepoint::week()
+int Timepoint::week() const
 {
-	return static_cast<int>(time_ / 10080);
+	return std::ceil(static_cast<double>(time_) / 10080.0);
 }
 
 }
