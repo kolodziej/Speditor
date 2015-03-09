@@ -119,4 +119,9 @@ Timepoint Timepoint::operator--(int /*unused*/)
 	return tp;
 }
 
+operator Timepoint::bool()
+{
+	return (time_ != -1);
+}
+
 }

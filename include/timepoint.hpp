@@ -6,7 +6,9 @@ namespace speditor {
 class Timepoint
 {
 public:
-	Timepoint() {}
+	Timepoint() :
+		time_{-1}
+	{}
 	Timepoint(long long);
 	Timepoint(short hour, short minute, int day = 1, int week = 1);
 
@@ -31,6 +33,8 @@ public:
 	Timepoint operator++(int);
 	Timepoint& operator--();
 	Timepoint operator--(int);
+
+	operator bool();
 
 private:
 	long long time_;
