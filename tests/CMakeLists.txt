@@ -32,3 +32,6 @@ target_link_libraries(timepoint "${LIBRARIES}")
 
 add_executable(clock clock.cpp)
 target_link_libraries(clock Speditor pthread)
+
+add_executable(schedule schedule.cpp)
+target_link_libraries(schedule "${LIBRARIES}")
