@@ -24,9 +24,6 @@ public:
 	std::vector<TaskPtr> getTasks();
 
 private:
-	bool canDoLoop_();
-	bool runTask_(Timepoint);
-
 	std::vector<TaskPtr> tasks_;
 	std::vector<TaskPtr>::iterator current_task_;
 	

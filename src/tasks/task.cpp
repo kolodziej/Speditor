@@ -24,10 +24,6 @@ bool Task::isFinished()
 	return end_;
 }
 
-bool Task::loop(Timepoint tp)
-{
-}
-
 Timepoint Task::plannedStart()
 {
 	return planned_start_;
@@ -48,7 +44,7 @@ Timepoint Task::endTime()
 	return end_;
 }
 
-void Timepoint::doLoop_(Timepoint tp)
+void Task::doLoop_(Timepoint tp)
 {
 	if (isRunning() == false && planned_start_ <= tp)
 	{

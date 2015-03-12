@@ -1,5 +1,8 @@
 #include "tasks/queue.hpp"
 
+#include <algorithm>
+#include <stdexcept>
+
 namespace speditor { namespace tasks {
 
 Queue::Queue(std::initializer_list<TaskPtr> list) :
@@ -39,7 +42,7 @@ void Queue::removeTask(TaskPtr task)
 			tasks_.erase(it);
 		} else
 		{
-			// throw proper exception
+			throw std::runtime_error("task is currently running!");
 		}
 	}
 }
@@ -47,12 +50,6 @@ void Queue::removeTask(TaskPtr task)
 std::vector<TaskPtr> Queue::getTasks()
 {
 	return tasks_;
-}
-
-bool Queue::runTask_(Timepoint tp)
-{
-	TaskPtr task = *current_task_;
-	return task->loop(tp);
 }
 
 } }
