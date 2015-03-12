@@ -2,7 +2,13 @@
 #define SPEDITOR_TASKS_TASK_HPP
 #include "timepoint.hpp"
 
-namespace speditor { namespace tasks {
+#include <mutex>
+
+namespace speditor {
+
+class Schedule;
+
+namespace tasks {
 
 class Task
 {
@@ -26,7 +32,9 @@ private:
 	Timepoint start_;
 	Timepoint end_;
 
-friend class Schedule;
+	std::mutex mtx_;
+
+friend class speditor::Schedule;
 };
 
 } }
