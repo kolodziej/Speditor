@@ -3,6 +3,7 @@
 #include "task.hpp"
 
 #include <vector>
+#include <memory>
 
 namespace speditor { namespace tasks {
 
@@ -14,18 +15,20 @@ public:
 	Queue() {}
 	Queue(std::initializer_list<TaskPtr>);
 
-	virtual void begin();
-	virtual void loop(Timepoint);
+	virtual bool loop(Timepoint);
 	virtual bool isRunning();
 	virtual bool isFinished();
 
 	void addTask(TaskPtr);
 	void removeTask(TaskPtr);
-	std::vector<TaskPtr>&& getTasks();
-
+	std::vector<TaskPtr> getTasks();
 
 private:
+	bool canDoLoop_();
+	bool runTask_(Timepoint);
+
 	std::vector<TaskPtr> tasks_;
+	std::vector<TaskPtr>::iterator current_task_;
 	
 };
 

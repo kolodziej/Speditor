@@ -7,8 +7,9 @@ namespace speditor { namespace tasks {
 class Task
 {
 public:
-	virtual void begin() = 0;
-	virtual void loop(Timepoint) = 0;
+	Task();
+	Task(Timepoint, Timepoint = -1);
+	virtual bool loop(Timepoint) = 0;
 	virtual bool isRunning();
 	virtual bool isFinished();
 
@@ -18,10 +19,14 @@ public:
 	Timepoint endTime();
 
 private:
+	virtual void doLoop_(Timepoint);
+
 	Timepoint planned_start_;
 	Timepoint planned_end_;
 	Timepoint start_;
 	Timepoint end_;
+
+friend class Schedule;
 };
 
 } }

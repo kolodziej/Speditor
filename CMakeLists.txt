@@ -29,6 +29,8 @@ set(SOURCES
 	"${SD}/src/routing_policy/economical.cpp"
 	"${SD}/src/traffic_policy/chain.cpp"
 	"${SD}/src/traffic_policy/sinus.cpp"
+	"${SD}/src/tasks/task.cpp"
+	"${SD}/src/tasks/queue.cpp"
 )
 
 set(HEADERS
@@ -52,6 +54,8 @@ set(HEADERS
 	"${SD}/include/traffic_policy/policy.hpp"
 	"${SD}/include/traffic_policy/chain.hpp"
 	"${SD}/include/traffic_policy/sinus.hpp"
+	"${SD}/include/tasks/task.hpp"
+	"${SD}/include/tasks/queue.hpp"
 )
 
 add_library(Speditor STATIC ${HEADERS} ${SOURCES})
