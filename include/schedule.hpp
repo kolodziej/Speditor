@@ -16,19 +16,21 @@ using TaskPtr = std::shared_ptr<tasks::Task>;
 class Schedule
 {
 public:
-	Schedule(Clock&, int = 1);
+	Schedule(Clock&, unsigned long = 0);
 
 	void addTask(TaskPtr);
 	void removeTask(TaskPtr);
 
+	void start();
+	void stop();
 	int threads() const;
+	int changeThreadsNumber(unsigned long);
 	int tasksPerThread() const;
 	
 private:
-	void threadBody_(const std::atomic_bool&);
-	
 	Clock& clock_;
 	std::list<TaskPtr> tasks_;
+	size_t threads_num_;
 	std::vector<std::thread> threads_;
 	std::atomic_bool threads_running_;
 };

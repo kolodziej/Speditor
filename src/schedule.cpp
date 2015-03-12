@@ -4,13 +4,14 @@
 #include <cmath>
 
 #include "clock.hpp"
+#include "tools/logger.hpp"
 
 namespace speditor {
 
-Schedule::Schedule(Clock& clock, int threads) :
+Schedule::Schedule(Clock& clock, unsigned long threads) :
 	clock_(clock),
-	threads_(threads),
-	threads_running_{true}
+	threads_num_{threads},
+	threads_running_{false}
 {}
 
 void Schedule::addTask(TaskPtr task)
@@ -27,6 +28,40 @@ void Schedule::removeTask(TaskPtr task)
 	}
 }
 
+void Schedule::start()
+{
+	threads_running_ = true;
+	auto thread_body = [&](std::atomic_bool* running) {
+		while (*running)
+		{
+			for (auto task : tasks_)
+			{
+				if (task->mtx_.try_lock())
+				{
+					task->doLoop_(clock_.timepoint());
+					task->mtx_.unlock();
+				}
+			}
+		}
+	};
+	for (int i = 0; i < threads_num_; ++i)
+	{
+		LogInfo("Starting Schedule's ", i, " thread!");
+		threads_.emplace_back(thread_body, &threads_running_);
+	}
+}
+
+void Schedule::stop()
+{
+	LogInfo("Stopping Schedule's threads...");
+	threads_running_ = false;
+	for (auto& t : threads_)
+	{
+		t.join();
+	}
+	LogInfo("All Schedule's threads stopped!");
+}
+
 int Schedule::threads() const
 {
 	return threads_.size();
@@ -35,21 +70,6 @@ int Schedule::threads() const
 int Schedule::tasksPerThread() const
 {
 	return std::ceil(static_cast<double>(tasks_.size()) / static_cast<double>(threads()));
-}
-
-void Schedule::threadBody_(const std::atomic_bool& running)
-{
-	while (running)
-	{
-		for (auto task : tasks_)
-		{
-			if (task->mtx_.try_lock())
-			{
-				task->doLoop_(clock_.timepoint());
-				task->mtx_.unlock();
-			}
-		}
-	}
 }
 
 }
