@@ -1,9 +1,9 @@
-#include "gtest/gtest.h"
 #include "schedule.hpp"
 #include "tasks/task.hpp"
 #include "tasks/queue.hpp"
 #include "clock.hpp"
 
+#include <iostream>
 #include <thread>
 #include <memory>
 #include <chrono>
@@ -19,7 +19,8 @@ speditor::tools::Logger global_logger(std::cerr, true, true);
 class BasicTask : public st::Task
 {
 public:
-	BasicTask(int loops, int interval) :
+	BasicTask(Clock& clock, int loops, int interval) :
+		st::Task(clock.timepoint()),
 		loops_{loops},
 		interval_{interval}
 	{}
@@ -39,14 +40,14 @@ private:
 	int interval_;
 };
 
-TEST(ScheduleTest, BasicOneThread)
+int main(int argc, char** argv)
 {
 	Clock clock(100);
 	Schedule sch(clock, 1);
 	
 	std::random_device rd;
 	const int tasks = 10;
-#define SHT(l,i) std::make_shared<BasicTask>(l, i)
+#define SHT(l,i) std::make_shared<BasicTask>(clock, l, i)
 #define RANDOM(min, max) rd() % (max - min) + min 
 	for (int i = 0; i < tasks; ++i)
 	{
