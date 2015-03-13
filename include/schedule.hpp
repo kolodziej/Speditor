@@ -22,6 +22,7 @@ public:
 	void removeTask(TaskPtr);
 
 	void start();
+	void wait();
 	void stop();
 	int threads() const;
 	int changeThreadsNumber(unsigned long);

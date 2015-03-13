@@ -32,13 +32,19 @@ void Schedule::start()
 {
 	threads_running_ = true;
 	auto thread_body = [&](std::atomic_bool* running) {
-		while (*running)
+		bool all_finished = false;
+		while (*running && all_finished == false)
 		{
+			all_finished = true;
 			for (auto task : tasks_)
 			{
 				if (task->mtx_.try_lock())
 				{
 					task->doLoop_(clock_.timepoint());
+					if (task->isFinished() == false)
+					{
+						all_finished = false;
+					}
 					task->mtx_.unlock();
 				}
 			}
@@ -49,6 +55,15 @@ void Schedule::start()
 		LogInfo("Starting Schedule's ", i, " thread!");
 		threads_.emplace_back(thread_body, &threads_running_);
 	}
+}
+
+void Schedule::wait()
+{
+	for (auto& t : threads_)
+	{
+		t.join();
+	}
+	LogInfo("All Schedule's workers finished their work!");
 }
 
 void Schedule::stop()

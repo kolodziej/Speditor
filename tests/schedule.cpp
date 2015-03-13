@@ -19,8 +19,9 @@ speditor::tools::Logger global_logger(std::cerr, true, true);
 class BasicTask : public st::Task
 {
 public:
-	BasicTask(Clock& clock, int loops, int interval) :
+	BasicTask(Clock& clock, int task_id, int loops, int interval) :
 		st::Task(clock.timepoint()),
+		task_id_{task_id},
 		loops_{loops},
 		interval_{interval}
 	{}
@@ -28,7 +29,7 @@ public:
 	{
 		if (loops_-- > 0)
 		{
-			LogInfo("Processing loop for ", interval_);
+			LogInfo("#", task_id_, ": Processing loop for ", interval_, ". Left: ", loops_);
 			std::this_thread::sleep_for(std::chrono::milliseconds(interval_));
 			return false;
 		}
@@ -36,6 +37,7 @@ public:
 		return true;
 	}
 private:
+	int task_id_;
 	int loops_;
 	int interval_;
 };
@@ -43,19 +45,19 @@ private:
 int main(int argc, char** argv)
 {
 	Clock clock(100);
-	Schedule sch(clock, 1);
+	Schedule sch(clock, 5);
 	
 	std::random_device rd;
 	const int tasks = 10;
-#define SHT(l,i) std::make_shared<BasicTask>(clock, l, i)
+#define SHT(id,l,i) std::make_shared<BasicTask>(clock, id, l, i)
 #define RANDOM(min, max) rd() % (max - min) + min 
 	for (int i = 0; i < tasks; ++i)
 	{
-		sch.addTask(SHT(RANDOM(3,5), RANDOM(100,500)));
+		sch.addTask(SHT(i, RANDOM(3,5), RANDOM(100,200)));
 	}
 #undef SHT
 #undef RANDOM
 	sch.start();
-	std::this_thread::sleep_for(std::chrono::seconds(10));
-	sch.stop();
+	sch.wait();
+	return 0;
 }
