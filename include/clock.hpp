@@ -14,6 +14,7 @@ public:
 	Clock(int);
 	Timepoint timepoint();
 	void updateTime();
+	void reset();
 
 private:
 

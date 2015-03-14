@@ -26,4 +26,11 @@ void Clock::updateTime()
 	time_ = static_cast<double>(ms) / minute_duration_;
 }
 
+void Clock::reset()
+{
+	std::lock_guard<std::mutex> lock(clock_mutex_);
+	start_ = clock_.now();
+	time_ = 0;
+}
+
 }
