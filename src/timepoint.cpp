@@ -81,6 +81,16 @@ Timepoint& Timepoint::operator-=(Timepoint right)
 	return *this;
 }
 
+Timepoint Timepoint::operator+(long long add)
+{
+	return Timepoint(time_ + add);
+}
+
+Timepoint Timepoint::operator-(long long subtract)
+{
+	return Timepoint(time_ - subtract);
+}
+
 Timepoint& Timepoint::operator+=(long long add)
 {
 	time_ += add;
@@ -117,6 +127,31 @@ Timepoint Timepoint::operator--(int /*unused*/)
 	Timepoint tp = *this;
 	--time_;
 	return tp;
+}
+
+bool Timepoint::operator>(Timepoint right)
+{
+	return time_ > right.get();
+}
+
+bool Timepoint::operator>=(Timepoint right)
+{
+	return time_ >= right.get();
+}
+
+bool Timepoint::operator<(Timepoint right)
+{
+	return time_ < right.get();
+}
+
+bool Timepoint::operator<=(Timepoint right)
+{
+	return time_ <= right.get();
+}
+
+bool Timepoint::operator==(Timepoint right)
+{
+	return time_ == right.get();
 }
 
 Timepoint::operator bool()

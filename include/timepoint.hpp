@@ -27,12 +27,20 @@ public:
 	Timepoint& operator+=(Timepoint);
 	Timepoint& operator-=(Timepoint);
 
+	Timepoint operator+(long long);
+	Timepoint operator-(long long);
 	Timepoint& operator+=(long long);
 	Timepoint& operator-=(long long);
 	Timepoint& operator++();
 	Timepoint operator++(int);
 	Timepoint& operator--();
 	Timepoint operator--(int);
+
+	bool operator>(Timepoint);
+	bool operator>=(Timepoint);
+	bool operator<(Timepoint);
+	bool operator<=(Timepoint);
+	bool operator==(Timepoint);
 
 	operator bool();
 
