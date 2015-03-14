@@ -38,10 +38,13 @@ void Schedule::start()
 			all_finished = true;
 			for (auto task : tasks_)
 			{
+				if (task->finished())
+				{
+					continue;
+				}
 				if (task->mtx_.try_lock())
 				{
-					task->doLoop_(clock_.timepoint());
-					if (task->isFinished() == false)
+					if (task->doLoop_(clock_.timepoint()) == false)
 					{
 						all_finished = false;
 					}

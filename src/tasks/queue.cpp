@@ -11,7 +11,7 @@ Queue::Queue(std::initializer_list<TaskPtr> list) :
 
 bool Queue::loop(Timepoint tp)
 {
-	if (isRunning())
+	if (running())
 	{
 		if ((*current_task_)->loop(tp))
 		{
@@ -37,7 +37,7 @@ void Queue::removeTask(TaskPtr task)
 	auto it = std::find(tasks_.begin(), tasks_.end(), task);
 	if (it != tasks_.end())
 	{
-		if ((*it)->isRunning() == false)
+		if ((*it)->running() == false)
 		{
 			tasks_.erase(it);
 		} else

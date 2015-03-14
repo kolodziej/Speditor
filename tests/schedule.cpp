@@ -1,3 +1,4 @@
+#include "gtest/gtest.h"
 #include "schedule.hpp"
 #include "tasks/task.hpp"
 #include "tasks/queue.hpp"
@@ -5,59 +6,105 @@
 
 #include <iostream>
 #include <thread>
+#include <mutex>
 #include <memory>
 #include <chrono>
 #include <random>
+#include <vector>
+#include <utility>
 
 #include "tools/logger.hpp"
 
 namespace st = speditor::tasks;
 using namespace speditor;
 
-speditor::tools::Logger global_logger(std::cerr, speditor::tools::Logger::ShowType | speditor::tools::Logger::ShowType | speditor::tools::Logger::ShowTID);
+tools::Logger global_logger(std::cout, tools::Logger::Defaults | tools::Logger::ShowTID);
 
-class BasicTask : public st::Task
+std::random_device rd;
+
+class ScheduleTest : public ::testing::Test
 {
-public:
-	BasicTask(Clock& clock, int task_id, int loops, int interval) :
-		st::Task(clock.timepoint()),
-		task_id_{task_id},
-		loops_{loops},
-		interval_{interval}
-	{}
-	virtual bool loop(Timepoint tp)
+protected:
+	void SetUp()
 	{
-		if (loops_-- > 0)
-		{
-			LogInfo("#", task_id_, ": Processing loop for ", interval_, ". Left: ", loops_);
-			std::this_thread::sleep_for(std::chrono::milliseconds(interval_));
-			return false;
-		}
-
-		return true;
+	
 	}
-private:
-	int task_id_;
-	int loops_;
-	int interval_;
+
 };
 
-int main(int argc, char** argv)
+class AccurateTask : public st::Task
 {
-	Clock clock(100);
-	Schedule sch(clock, 5);
-	
-	std::random_device rd;
-	const int tasks = 10;
-#define SHT(id,l,i) std::make_shared<BasicTask>(clock, id, l, i)
-#define RANDOM(min, max) rd() % (max - min) + min 
-	for (int i = 0; i < tasks; ++i)
+public:
+	AccurateTask(Timepoint begin, Timepoint end) :
+		Task{begin, end}
+	{}
+
+	virtual bool loop(Timepoint tp)
 	{
-		sch.addTask(SHT(i, RANDOM(3,5), RANDOM(100,200)));
+		if (tp >= endTime())
+		{
+			return true;
+		}
+		return false;
 	}
-#undef SHT
-#undef RANDOM
-	sch.start();
-	sch.wait();
-	return 0;
+};
+
+#define RAND(min, max) rd() % (max - min) + min
+
+/* sets 10 tasks for 2 workers - controls their begin end end time */
+TEST_F(ScheduleTest, Basic)
+{
+	const int min = 2;
+	const int max = 10;
+	const int tasks_number = 10;
+	const int workers_number = 2;
+	const int clock_minute = 200;
+
+	Clock clock(clock_minute);
+	std::atomic_bool running_clock;
+	running_clock = true;
+	std::thread clock_thread([&clock, clock_minute](std::atomic_bool* running) {
+		while (*running)
+		{
+			clock.updateTime();
+			std::this_thread::sleep_for(std::chrono::milliseconds(clock_minute/10));
+		}
+	}, &running_clock);
+
+	std::vector<std::tuple<Timepoint, Timepoint, TaskPtr>> tasks;
+
+	for (int i = 0; i < tasks_number; ++i)
+	{
+		Timepoint begin(RAND(min, max));
+		Timepoint end = begin + static_cast<long long>(RAND(min, max));
+		auto tup = std::make_tuple(begin, end, std::make_shared<AccurateTask>(begin, end));
+		tasks.push_back(tup);
+	}
+
+	Schedule schedule(clock, workers_number);
+	for (auto task : tasks)
+	{
+		schedule.addTask(std::get<2>(task));
+	}
+
+	// starts tasks
+	clock.reset();
+	schedule.start();
+	schedule.wait();
+	running_clock = false;
+	clock_thread.join();
+
+	// checking test
+	for (auto task : tasks)
+	{
+		TaskPtr t = std::get<2>(task);
+
+		// start time
+		ASSERT_EQ(t->plannedStart(), std::get<0>(task));
+		ASSERT_EQ(t->plannedStart(), t->startTime());
+
+		// end time
+		ASSERT_EQ(t->plannedEnd(), std::get<1>(task));
+		ASSERT_EQ(t->endTime().get(), t->plannedEnd().get());
+	}
 }
