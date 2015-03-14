@@ -63,6 +63,19 @@ TEST(Timepoint, Operators)
 	ASSERT_EQ(tp3.week(), 1);
 }
 
+TEST(Timepoint, Comparison)
+{
+	Timepoint t1(1), t2(1), t3(2);
+	ASSERT_EQ(t1, t2);
+	ASSERT_NE(t2, t3);
+	ASSERT_GT(t3, t2);
+	ASSERT_GE(t3, t2);
+	ASSERT_GE(t1, t2);
+	ASSERT_LT(t2, t3);
+	ASSERT_LE(t2, t3);
+	ASSERT_LE(t1, t2);
+}
+
 TEST(Timepoint, Incrementation)
 {
 	Timepoint tp(23, 59, 1, 1); // 1st day of 1st week, 23:59
