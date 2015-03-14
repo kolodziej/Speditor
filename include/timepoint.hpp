@@ -22,13 +22,13 @@ public:
 	short dayOfWeek() const;
 	int week() const;
 
-	Timepoint operator+(Timepoint);
-	Timepoint operator-(Timepoint);
+	Timepoint operator+(Timepoint) const;
+	Timepoint operator-(Timepoint) const;
 	Timepoint& operator+=(Timepoint);
 	Timepoint& operator-=(Timepoint);
 
-	Timepoint operator+(long long);
-	Timepoint operator-(long long);
+	Timepoint operator+(long long) const;
+	Timepoint operator-(long long) const;
 	Timepoint& operator+=(long long);
 	Timepoint& operator-=(long long);
 	Timepoint& operator++();
@@ -36,13 +36,14 @@ public:
 	Timepoint& operator--();
 	Timepoint operator--(int);
 
-	bool operator>(Timepoint);
-	bool operator>=(Timepoint);
-	bool operator<(Timepoint);
-	bool operator<=(Timepoint);
-	bool operator==(Timepoint);
+	bool operator>(Timepoint) const;
+	bool operator>=(Timepoint) const;
+	bool operator<(Timepoint) const;
+	bool operator<=(Timepoint) const;
+	bool operator==(Timepoint) const;
+	bool operator!=(Timepoint) const;
 
-	operator bool();
+	operator bool() const;
 
 private:
 	long long time_;

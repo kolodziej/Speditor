@@ -59,12 +59,12 @@ int Timepoint::week() const
 	return static_cast<int>(time_ / 10080) + 1;
 }
 
-Timepoint Timepoint::operator+(Timepoint right)
+Timepoint Timepoint::operator+(Timepoint right) const
 {
 	return Timepoint(get() + right.get());
 }
 
-Timepoint Timepoint::operator-(Timepoint right)
+Timepoint Timepoint::operator-(Timepoint right) const
 {
 	return Timepoint(get() + right.get());
 }
@@ -81,12 +81,12 @@ Timepoint& Timepoint::operator-=(Timepoint right)
 	return *this;
 }
 
-Timepoint Timepoint::operator+(long long add)
+Timepoint Timepoint::operator+(long long add) const
 {
 	return Timepoint(time_ + add);
 }
 
-Timepoint Timepoint::operator-(long long subtract)
+Timepoint Timepoint::operator-(long long subtract) const
 {
 	return Timepoint(time_ - subtract);
 }
@@ -129,32 +129,37 @@ Timepoint Timepoint::operator--(int /*unused*/)
 	return tp;
 }
 
-bool Timepoint::operator>(Timepoint right)
+bool Timepoint::operator>(Timepoint right) const
 {
 	return time_ > right.get();
 }
 
-bool Timepoint::operator>=(Timepoint right)
+bool Timepoint::operator>=(Timepoint right) const
 {
 	return time_ >= right.get();
 }
 
-bool Timepoint::operator<(Timepoint right)
+bool Timepoint::operator<(Timepoint right) const
 {
 	return time_ < right.get();
 }
 
-bool Timepoint::operator<=(Timepoint right)
+bool Timepoint::operator<=(Timepoint right) const
 {
 	return time_ <= right.get();
 }
 
-bool Timepoint::operator==(Timepoint right)
+bool Timepoint::operator==(Timepoint right) const
 {
 	return time_ == right.get();
 }
 
-Timepoint::operator bool()
+bool Timepoint::operator!=(Timepoint right) const
+{
+	return time_ != right.get();
+}
+
+Timepoint::operator bool() const
 {
 	return (time_ != -1);
 }
