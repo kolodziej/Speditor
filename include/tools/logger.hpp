@@ -16,7 +16,14 @@ namespace speditor { namespace tools {
 class Logger
 {
 public:
-	Logger(std::ostream& output, bool show_time = true, bool show_tid = true);
+	enum Settings : unsigned int
+	{
+		Defaults = 1 | 4,
+		ShowTime = 1,
+		ShowTID = 2,
+		ShowType = 4
+	};
+	Logger(std::ostream& output, unsigned int settings = Defaults);
 
 	template <typename... Args>
 	void log(LogType, Args... r);
@@ -30,8 +37,7 @@ private:
 	std::string format_now_time_();
 
 	std::ostream& output_;
-	const bool show_time_;
-	const bool show_tid_;
+	unsigned int settings_;
 	LogType current_log_type_;
 	std::stringstream log_;
 	std::mutex lock_;

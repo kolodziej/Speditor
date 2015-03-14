@@ -11,7 +11,7 @@
 
 using namespace speditor;
 
-speditor::tools::Logger global_logger(std::cerr, true, false);
+speditor::tools::Logger global_logger(std::cerr, speditor::tools::Logger::ShowTime | speditor::tools::Logger::ShowType);
 
 class RouteTest : public ::testing::Test
 {

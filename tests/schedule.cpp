@@ -14,7 +14,7 @@
 namespace st = speditor::tasks;
 using namespace speditor;
 
-speditor::tools::Logger global_logger(std::cerr, true, true);
+speditor::tools::Logger global_logger(std::cerr, speditor::tools::Logger::ShowType | speditor::tools::Logger::ShowType | speditor::tools::Logger::ShowTID);
 
 class BasicTask : public st::Task
 {

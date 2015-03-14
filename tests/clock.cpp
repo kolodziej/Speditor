@@ -10,7 +10,7 @@
 
 #include "tools/logger.hpp"
 
-speditor::tools::Logger global_logger(std::cerr, true, true);
+speditor::tools::Logger global_logger(std::cerr, speditor::tools::Logger::ShowTime | speditor::tools::Logger::ShowTID);
 
 using speditor::Clock;
 using speditor::Timepoint;

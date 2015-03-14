@@ -31,7 +31,7 @@ private:
 	map.addRoad(from, road); \
 }
 
-speditor::tools::Logger global_logger(std::cerr, false, false);
+speditor::tools::Logger global_logger(std::cerr, speditor::tools::Logger::ShowType);
 
 std::string roadsStr(std::vector<std::shared_ptr<Road>> roads)
 {

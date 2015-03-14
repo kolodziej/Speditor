@@ -5,25 +5,36 @@
 #include <vector>
 #include <thread>
 #include <chrono>
+#include <sstream>
+#include <random>
 
 #include <cstdlib>
 #include <ctime>
 
+std::random_device rd;
+
 TEST(Logger, Threads)
 {
 	std::srand(std::time(0));
-	speditor::tools::Logger logger(std::cout);
+	std::stringstream stream;
+	std::set<std::string> tokens;
+	std::set<std::string> received_tokens;
+
+	speditor::tools::Logger logger(stream);
 	std::vector<std::thread> threads(10);
-	char c = 'a';
-	int k = 0;
 	for (auto& thread : threads)
 	{
-		std::string str(30, c++);
-		thread = std::move(std::thread([&logger, str, &k, c]() {
+		thread = std::move(std::thread([&logger]() {
 			for (int i = 0; i < 10; ++i)
 			{
-				std::this_thread::sleep_for(std::chrono::milliseconds(std::rand() % 500));
-				logger.log(speditor::tools::LogType::Critical, str, c, k++);
+				std::stringstream token;
+#define RANDOM(min, max) rd() % (max - min) + min
+				for (int j = 0; j < 100; ++j)
+				{
+					token << static_cast<char>(RANDOM('a', 'z'));
+				}
+				logger.log(speditor::tools::LogType::Info, token.str());
+
 			}
 		}));
 	}

@@ -4,10 +4,9 @@
 
 namespace speditor { namespace tools {
 
-Logger::Logger(std::ostream& output, bool show_time, bool show_tid) :
+Logger::Logger(std::ostream& output, unsigned int settings) :
 	output_(output),
-	show_time_(show_time),
-	show_tid_(show_tid)
+	settings_(settings)
 {}
 
 std::string Logger::format_now_time_()
