@@ -77,9 +77,6 @@ bool Task::doLoop_(Timepoint tp)
 		{
 			start_ = tp;
 			last_run_ = tp - static_cast<long long>(interval_);
-		} else
-		{
-			return false;
 		}
 	} else if (running())
 	{

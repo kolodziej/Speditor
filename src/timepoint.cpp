@@ -1,5 +1,6 @@
 #include "timepoint.hpp"
 
+#include <sstream>
 #include <cmath>
 #include "clock.hpp"
 

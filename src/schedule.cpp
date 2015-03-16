@@ -44,7 +44,8 @@ void Schedule::start()
 				}
 				if (task->mtx_.try_lock())
 				{
-					if (task->doLoop_(clock_.timepoint()) == false)
+					Timepoint tp = clock_.timepoint();
+					if (task->doLoop_(tp) == false)
 					{
 						all_finished = false;
 					}
