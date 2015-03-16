@@ -3,7 +3,7 @@
 
 namespace speditor {
 
-City::City(std::string name, int max_bases, int max_client_companies) :
+City::City(std::string name, unsigned int max_bases, unsigned int max_client_companies) :
 	name_{name},
 	max_bases_{max_bases},
 	max_client_companies_{max_client_companies}

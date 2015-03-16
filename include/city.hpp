@@ -19,7 +19,7 @@ class City :
 	public Node
 {
 public:
-	City(std::string, int = 1000, int = 1000);
+	City(std::string, unsigned int = 1000, unsigned int = 1000);
 
 	std::string name();
 	std::vector<BasePtr> bases();
@@ -36,8 +36,8 @@ public:
 	
 private:
 	std::string name_;
-	int max_bases_;
-	int max_client_companies_;
+	unsigned int max_bases_;
+	unsigned int max_client_companies_;
 
 	std::vector<BasePtr> bases_;
 	std::vector<ClientCompanyPtr> client_companies_;

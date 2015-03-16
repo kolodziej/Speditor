@@ -4,6 +4,7 @@
 #include <limits>
 #include <queue>
 #include <typeinfo>
+#include <stdexcept>
 #include <cmath>
 
 #include "tools/logger.hpp"
@@ -30,19 +31,17 @@ void Map::addRoad(NodePtr node, RoadPtr road)
 
 Route Map::getRoute(routing_policy::Abstract& policy, std::vector<NodePtr> nodes)
 {
-	if (nodes.size() > 1)
+	if (nodes.size() < 2)
 	{
-		Route rt(nodes.front());
-		for (auto it = nodes.begin() + 1; it != nodes.end(); ++it)
-		{
-			rt += findShortestRoute_(policy, *(it-1), *it);
-		}
-
-		return rt;
-	} else
-	{
-		// throw proper exception
+		throw std::logic_error("nodes number < 2");
 	}
+	Route rt(nodes.front());
+	for (auto it = nodes.begin() + 1; it != nodes.end(); ++it)
+	{
+		rt += findShortestRoute_(policy, *(it-1), *it);
+	}
+
+	return rt;
 }
 
 void Map::calcRoadsParams(Timepoint tp)

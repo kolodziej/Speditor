@@ -54,7 +54,7 @@ void Schedule::start()
 			}
 		}
 	};
-	for (int i = 0; i < threads_num_; ++i)
+	for (unsigned int i = 0; i < threads_num_; ++i)
 	{
 		LogInfo("Starting Schedule's ", i, " thread!");
 		threads_.emplace_back(thread_body, &threads_running_);
