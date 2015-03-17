@@ -15,50 +15,8 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O2 -static -lm")
 
 set(SD "${PROJECT_SOURCE_DIR}")
 
-set(SOURCES
-	"${SD}/src/map.cpp"
-	"${SD}/src/city.cpp"
-	"${SD}/src/node.cpp"
-	"${SD}/src/road.cpp"
-	"${SD}/src/route.cpp"
-	"${SD}/src/clock.cpp"
-	"${SD}/src/timepoint.cpp"
-	"${SD}/src/tools/logger.cpp"
-	"${SD}/src/routing_policy/shortest.cpp"
-	"${SD}/src/routing_policy/fastest.cpp"
-	"${SD}/src/routing_policy/economical.cpp"
-	"${SD}/src/traffic_policy/chain.cpp"
-	"${SD}/src/traffic_policy/sinus.cpp"
-	"${SD}/src/tasks/task.cpp"
-	"${SD}/src/tasks/queue.cpp"
-	"${SD}/src/schedule.cpp"
-)
-
-set(HEADERS
-	"${SD}/include/map.hpp"
-	"${SD}/include/city.hpp"
-	"${SD}/include/crossroads.hpp"
-	"${SD}/include/node.hpp"
-	"${SD}/include/node_type.hpp"
-	"${SD}/include/road.hpp"
-	"${SD}/include/route.hpp"
-	"${SD}/include/clock.hpp"
-	"${SD}/include/timepoint.hpp"
-	"${SD}/include/tools/logger.hpp"
-	"${SD}/include/tools/log_type.hpp"
-	"${SD}/impl/tools/logger.hpp"
-	"${SD}/include/routing_policy/abstract.hpp"
-	"${SD}/include/routing_policy/policies.hpp"
-	"${SD}/include/routing_policy/shortest.hpp"
-	"${SD}/include/routing_policy/fastest.hpp"
-	"${SD}/include/routing_policy/economical.hpp"
-	"${SD}/include/traffic_policy/policy.hpp"
-	"${SD}/include/traffic_policy/chain.hpp"
-	"${SD}/include/traffic_policy/sinus.hpp"
-	"${SD}/include/tasks/task.hpp"
-	"${SD}/include/tasks/queue.hpp"
-	"${SD}/include/schedule.hpp"
-)
+file(GLOB_RECURSE SOURCES src/*.cpp)
+file(GLOB_RECURSE HEADERS {include,impl}/*.hpp)
 
 add_library(Speditor STATIC ${HEADERS} ${SOURCES})
 
