@@ -3,6 +3,8 @@
 
 #include <chrono>
 #include <mutex>
+#include <thread>
+#include <atomic>
 
 namespace speditor {
 
@@ -16,11 +18,15 @@ public:
 	void updateTime();
 	void reset();
 
-private:
+	void run();
+	void wait();
 
+private:
+	std::atomic_bool thread_running_;
+	std::thread clock_thread_;
+	std::mutex clock_mutex_;
 	const int minute_duration_;
 	long long time_;
-	std::mutex clock_mutex_;
 
 	std::chrono::steady_clock clock_;
 	std::chrono::time_point<std::chrono::steady_clock> start_;

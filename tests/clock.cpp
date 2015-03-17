@@ -22,19 +22,12 @@ int main()
 
 	std::cout << "To stop application use Ctrl+C combination\n";
 	std::cout << "One minute lasts " << static_cast<double>(minute)/1000.0 << " seconds\n";
-	Clock c(minute);
-
-	std::thread clock_thread([&c]() {
-		while (true)
-		{
-			c.updateTime();
-			std::this_thread::sleep_for(std::chrono::milliseconds(interval));
-		}
-	});
+	Clock clock(minute);
+	clock.run();
 
 	while (true)
 	{
-		Timepoint t = c.timepoint();
+		Timepoint t = clock.timepoint();
 		std::cout << "\r" << "Week: " << std::setw(2) << t.week() << " "
 							<< "Day: " << std::setw(2) << t.day() << " "
 							<< "Hour: " << std::setw(2) << t.hour() << " "
@@ -42,6 +35,6 @@ int main()
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(interval));
 	}
-	clock_thread.join();
+	clock.wait();
 	return 0;
 }
