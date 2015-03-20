@@ -13,7 +13,7 @@ class Timepoint;
 class Clock
 {
 public:
-	Clock(int);
+	Clock(int = 1000);
 	Timepoint timepoint();
 	void updateTime();
 	void reset();
