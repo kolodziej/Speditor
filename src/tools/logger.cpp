@@ -8,7 +8,29 @@ Logger::Logger(std::ostream& output, unsigned int settings) :
 	output_(output),
 	settings_{settings},
 	messages_number_{0}
-{}
+{
+	on(LogType::Debug);
+	on(LogType::Warning);
+	on(LogType::Error);
+	on(LogType::Critical);
+}
+
+Logger& Logger::on(LogType type)
+{
+	logging_types_[static_cast<unsigned int>(type)] = true;
+	return *this;
+}
+
+Logger& Logger::off(LogType type)
+{
+	logging_types_[static_cast<unsigned int>(type)] = false;
+	return *this;
+}
+
+bool Logger::is(LogType type)
+{
+	return logging_types_[static_cast<unsigned int>(type)];
+}
 
 std::string Logger::format_now_time_()
 {

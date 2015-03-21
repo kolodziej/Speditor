@@ -1,4 +1,5 @@
 #include <thread>
+#include <iomanip>
 #include <ctime>
 
 namespace speditor { namespace tools {
@@ -6,12 +7,17 @@ namespace speditor { namespace tools {
 template <typename... Args>
 inline void Logger::log(LogType type, Args... args)
 {
+	if (is(type) == false)
+	{
+		return;
+	}
+
 	lock_.lock();
 	log_.str("");
 
 	if (settings_ & ShowMessageNumber)
 	{
-		log_ << ++messages_number_ << " ";
+		log_ << std::setw(10) << std::setfill('0') << ++messages_number_ << " ";
 	}
 
 	if (settings_ & ShowTime)
@@ -30,6 +36,8 @@ inline void Logger::log(LogType type, Args... args)
 		{
 			case LogType::DetailedDebug:
 				log_ << "[Detail] ";
+				break;
+
 			case LogType::Debug:
 				log_ << "[Debug] ";
 				break;

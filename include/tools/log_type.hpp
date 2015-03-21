@@ -5,12 +5,17 @@ namespace speditor { namespace tools {
 
 enum class LogType : unsigned short
 {
-	DetailedDebug = 1,
-	Debug = 2,
-	Warning = 4,
-	Error = 8,
-	Critical = 16
+	DetailedDebug = 0,
+	Debug,
+	Warning,
+	Error,
+	Critical
 };
+
+constexpr size_t log_type_counter()
+{
+	return 5;
+}
 
 } }
 

@@ -26,6 +26,10 @@ public:
 	};
 	Logger(std::ostream& output, unsigned int settings = Defaults);
 
+	Logger& on(LogType type);
+	Logger& off(LogType type);
+	bool is(LogType type);
+
 	template <typename... Args>
 	void log(LogType, Args... r);
 
@@ -40,6 +44,7 @@ private:
 	std::ostream& output_;
 	unsigned int settings_;
 	unsigned long long messages_number_;
+	bool logging_types_[log_type_counter()];
 	LogType current_log_type_;
 	std::stringstream log_;
 	std::mutex lock_;

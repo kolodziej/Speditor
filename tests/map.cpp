@@ -103,7 +103,7 @@ TEST_F(MapTest, Dijkstra1)
 	ASSERT_EQ(route.endNode(), cities[3]);
 	ASSERT_TRUE(route.continuous());
 	auto roads = route.roads();
-	ASSERT_EQ(roads.size(), 2);
+	ASSERT_EQ(roads.size(), 2u);
 	ASSERT_EQ(roads[0]->length(), 250) << roadsStr(roads);
 	ASSERT_EQ(roads[1]->length(), 800) << roadsStr(roads);
 }
@@ -116,7 +116,7 @@ TEST_F(MapTest, Dijkstra2)
 	ASSERT_EQ(route.endNode(), cities[3]);
 	ASSERT_TRUE(route.continuous());
 	auto roads = route.roads();
-	ASSERT_EQ(roads.size(), 4);
+	ASSERT_EQ(roads.size(), 4u);
 
 	ASSERT_EQ(roads[0]->length(), 250) << roadsStr(roads);
 	ASSERT_EQ(roads[1]->length(), 20) << roadsStr(roads);
@@ -135,7 +135,7 @@ TEST_F(MapTest, ShortestRoute)
 	routing_policy::Shortest policy;
 	Route route = map2.getRoute(policy, { nodes[0], nodes[2] });
 	ASSERT_TRUE(route.continuous());
-	ASSERT_EQ(route.roads().size(), 1);
+	ASSERT_EQ(route.roads().size(), 1u);
 	ASSERT_EQ(route.roads()[0]->length(), 35);
 }
 
@@ -144,5 +144,5 @@ TEST_F(MapTest, FastestRoute)
 	routing_policy::Fastest policy;
 	Route route = map2.getRoute(policy, { nodes[0], nodes[2] });
 	ASSERT_TRUE(route.continuous());
-	ASSERT_EQ(route.roads().size(), 2) << roadsStr(route.roads());
+	ASSERT_EQ(route.roads().size(), 2u) << roadsStr(route.roads());
 }
