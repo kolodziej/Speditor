@@ -5,10 +5,11 @@ namespace speditor { namespace tools {
 
 enum class LogType : unsigned short
 {
-	Info = 0,
-	Warning,
-	Error,
-	Critical
+	DetailedDebug = 1,
+	Debug = 2,
+	Warning = 4,
+	Error = 8,
+	Critical = 16
 };
 
 } }

@@ -9,6 +9,11 @@ inline void Logger::log(LogType type, Args... args)
 	lock_.lock();
 	log_.str("");
 
+	if (settings_ & ShowMessageNumber)
+	{
+		log_ << ++messages_number_ << " ";
+	}
+
 	if (settings_ & ShowTime)
 	{
 		log_ << format_now_time_() << " ";
@@ -23,8 +28,10 @@ inline void Logger::log(LogType type, Args... args)
 	{
 		switch (type)
 		{
-			case LogType::Info:
-				log_ << "[Info] ";
+			case LogType::DetailedDebug:
+				log_ << "[Detail] ";
+			case LogType::Debug:
+				log_ << "[Debug] ";
 				break;
 
 			case LogType::Warning:

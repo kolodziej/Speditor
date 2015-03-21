@@ -33,7 +33,7 @@ TEST(Logger, Threads)
 				{
 					token << static_cast<char>(RANDOM('a', 'z'));
 				}
-				logger.log(speditor::tools::LogType::Info, token.str());
+				logger.log(speditor::tools::LogType::Debug, token.str());
 				mtx.lock();
 				tokens.insert(token.str());
 				mtx.unlock();

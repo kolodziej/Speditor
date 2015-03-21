@@ -1,10 +1,16 @@
 #ifndef SPEDITOR_TOOLS_LOG_MACROS_HPP
 #define SPEDITOR_TOOLS_LOG_MACROS_HPP
 
-#ifdef LOG_INFO
-#define LogInfo(...) GL.log(speditor::tools::LogType::Info, __VA_ARGS__)
+#ifdef LOG_DETAIL
+#define LogDetail(...) GL.log(speditor::tools::LogType::DetailedDebug, __VA_ARGS__)
 #else
-#define LogInfo(...)
+#define LogDetail(...)
+#endif
+
+#ifdef LOG_DEBUG
+#define LogDebug(...) GL.log(speditor::tools::LogType::Debug, __VA_ARGS__)
+#else
+#define LogDebug(...)
 #endif
 
 #ifdef LOG_WARNING

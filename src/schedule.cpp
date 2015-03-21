@@ -56,7 +56,7 @@ void Schedule::start()
 	};
 	for (unsigned int i = 0; i < threads_num_; ++i)
 	{
-		LogInfo("Starting Schedule's ", i, " thread!");
+		LogDebug("Starting Schedule's ", i, " thread!");
 		threads_.emplace_back(thread_body, &threads_running_);
 	}
 }
@@ -67,18 +67,18 @@ void Schedule::wait()
 	{
 		t.join();
 	}
-	LogInfo("All Schedule's workers finished their work!");
+	LogDebug("All Schedule's workers finished their work!");
 }
 
 void Schedule::stop()
 {
-	LogInfo("Stopping Schedule's threads...");
+	LogDebug("Stopping Schedule's threads...");
 	threads_running_ = false;
 	for (auto& t : threads_)
 	{
 		t.join();
 	}
-	LogInfo("All Schedule's threads stopped!");
+	LogDebug("All Schedule's threads stopped!");
 }
 
 int Schedule::threads() const

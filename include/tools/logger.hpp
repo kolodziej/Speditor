@@ -18,10 +18,11 @@ class Logger
 public:
 	enum Settings : unsigned int
 	{
-		Defaults = 1 | 4,
+		Defaults = 1 | 4 | 8,
 		ShowTime = 1,
 		ShowTID = 2,
-		ShowType = 4
+		ShowType = 4,
+		ShowMessageNumber = 8
 	};
 	Logger(std::ostream& output, unsigned int settings = Defaults);
 
@@ -38,6 +39,7 @@ private:
 
 	std::ostream& output_;
 	unsigned int settings_;
+	unsigned long long messages_number_;
 	LogType current_log_type_;
 	std::stringstream log_;
 	std::mutex lock_;
