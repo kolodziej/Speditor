@@ -13,7 +13,7 @@ class Timepoint;
 class Clock
 {
 public:
-	Clock(int = 1000);
+	Clock(unsigned int = 1000);
 	Timepoint timepoint();
 	void updateTime();
 	void reset();
@@ -25,7 +25,7 @@ private:
 	std::atomic_bool thread_running_;
 	std::thread clock_thread_;
 	std::mutex clock_mutex_;
-	const int minute_duration_;
+	const unsigned int minute_duration_;
 	long long time_;
 
 	std::chrono::steady_clock clock_;
