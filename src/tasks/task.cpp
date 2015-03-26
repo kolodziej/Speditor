@@ -69,7 +69,7 @@ void Task::setPlan(Timepoint start, Timepoint end)
 	planned_end_ = end;
 }
 
-bool Task::doLoop(Timepoint tp)
+bool Task::commonLoop(Timepoint tp)
 {
 	if (running() == false)
 	{

@@ -18,7 +18,7 @@ bool Queue::loop(Timepoint tp)
 {
 	if (running())
 	{
-		if ((*current_task_)->loop(tp))
+		if ((*current_task_)->commonLoop(tp))
 		{
 			++current_task_;
 		}
@@ -55,6 +55,11 @@ void Queue::removeTask(TaskPtr task)
 std::vector<TaskPtr> Queue::getTasks()
 {
 	return tasks_;
+}
+
+bool Queue::commonLoop(Timepoint tp)
+{
+	
 }
 
 } }

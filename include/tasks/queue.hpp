@@ -23,7 +23,9 @@ public:
 	std::vector<TaskPtr> getTasks();
 
 	virtual bool loop(Timepoint);
-	virtual bool doLoop(Timepoint);
+
+protected:
+	virtual bool commonLoop(Timepoint);
 
 private:
 	std::vector<TaskPtr> tasks_;

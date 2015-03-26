@@ -30,9 +30,11 @@ public:
 	void setPlan(Timepoint, Timepoint);
 
 	virtual bool loop(Timepoint) = 0;
-	virtual bool doLoop(Timepoint);
+
+protected:
+	virtual bool commonLoop(Timepoint);
+
 private:
-	
 	bool strict_start_;
 	unsigned long long interval_;
 
