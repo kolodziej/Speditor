@@ -37,14 +37,11 @@ protected:
 		tasks_number = 100;
 		workers_number = 5;
 		clock_minute = 20;
-
-		//clock.run();
 	}
 
 	void TearDown()
 	{
 		tasks.clear();
-		//clock.wait();
 	}
 
 	int min;

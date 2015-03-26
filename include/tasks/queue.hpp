@@ -12,16 +12,18 @@ using TaskPtr = std::shared_ptr<Task>;
 class Queue : public Task
 {
 public:
-	Queue() {}
-	Queue(std::initializer_list<TaskPtr>);
+	Queue(bool strict = true);
+	Queue(std::initializer_list<TaskPtr>, bool strict = true);
 
-	virtual bool loop(Timepoint);
 	virtual bool isRunning();
 	virtual bool isFinished();
 
 	void addTask(TaskPtr);
 	void removeTask(TaskPtr);
 	std::vector<TaskPtr> getTasks();
+
+	virtual bool loop(Timepoint);
+	virtual bool doLoop(Timepoint);
 
 private:
 	std::vector<TaskPtr> tasks_;

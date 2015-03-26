@@ -5,7 +5,12 @@
 
 namespace speditor { namespace tasks {
 
-Queue::Queue(std::initializer_list<TaskPtr> list) :
+Queue::Queue(bool strict) :
+	Task{strict}
+{}
+
+Queue::Queue(std::initializer_list<TaskPtr> list, bool strict) :
+	Task{strict},
 	tasks_{list}
 {}
 
