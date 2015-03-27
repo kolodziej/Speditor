@@ -1,5 +1,6 @@
 #ifndef SPEDITOR_TIMEPOINT_HPP
 #define SPEDITOR_TIMEPOINT_HPP
+#include <type_traits>
 
 namespace speditor {
 
@@ -22,15 +23,22 @@ public:
 	short dayOfWeek() const;
 	int week() const;
 
-	Timepoint operator+(Timepoint) const;
-	Timepoint operator-(Timepoint) const;
-	Timepoint& operator+=(Timepoint);
-	Timepoint& operator-=(Timepoint);
+	template <typename Integer,
+		typename std::enable_if<std::is_integral<Integer>::value, Integer>::type>
+	Timepoint operator+(Integer) const;
 
-	Timepoint operator+(long long) const;
-	Timepoint operator-(long long) const;
-	Timepoint& operator+=(long long);
-	Timepoint& operator-=(long long);
+	template <typename Integer,
+		typename std::enable_if<std::is_integral<Integer>::value, Integer>::type>
+	Timepoint operator-(Integer) const;
+
+	template <typename Integer,
+		typename std::enable_if<std::is_integral<Integer>::value, Integer>::type>
+	Timepoint& operator+=(Integer);
+
+	template <typename Integer,
+		typename std::enable_if<std::is_integral<Integer>::value, Integer>::type>
+	Timepoint& operator-=(Integer);
+
 	Timepoint& operator++();
 	Timepoint operator++(int);
 	Timepoint& operator--();
@@ -43,7 +51,10 @@ public:
 	bool operator==(Timepoint) const;
 	bool operator!=(Timepoint) const;
 
-	operator bool() const;
+	template <typename Integer,
+		typename std::enable_if<std::is_integral<Integer>::value, Integer>::type>
+	operator Integer() const;
+
 
 private:
 	long long time_;
@@ -51,5 +62,7 @@ private:
 };
 
 }
+
+#include "impl/timepoint.hpp"
 
 #endif
