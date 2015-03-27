@@ -36,27 +36,13 @@ TEST(Timepoint, Adv2)
 TEST(Timepoint, Operators)
 {
 	Timepoint tp1(1);
-	Timepoint tp2(2);
+	int interval = 2;
 
-	Timepoint r1 = tp1 + tp2;
+	Timepoint r1 = tp1 + interval;
 	ASSERT_EQ(r1.get(), 3);
 	
 	Timepoint tp3(23,59,1,1);
 	ASSERT_EQ(tp3.minute(), 59);
-	ASSERT_EQ(tp3.hour(), 23);
-	ASSERT_EQ(tp3.day(), 1);
-	ASSERT_EQ(tp3.dayOfWeek(), 0);
-	ASSERT_EQ(tp3.week(), 1);
-
-	tp3 += tp1;
-	ASSERT_EQ(tp3.minute(), 0);
-	ASSERT_EQ(tp3.hour(), 0);
-	ASSERT_EQ(tp3.day(), 2);
-	ASSERT_EQ(tp3.dayOfWeek(), 1);
-	ASSERT_EQ(tp3.week(), 1);
-
-	tp3 -= tp2;
-	ASSERT_EQ(tp3.minute(), 58);
 	ASSERT_EQ(tp3.hour(), 23);
 	ASSERT_EQ(tp3.day(), 1);
 	ASSERT_EQ(tp3.dayOfWeek(), 0);

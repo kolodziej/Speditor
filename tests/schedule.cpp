@@ -61,13 +61,12 @@ public:
 		Task{begin, end}
 	{}
 
-	virtual bool loop(Timepoint tp)
+	virtual void action(Timepoint tp)
 	{
-		if (tp >= plannedEnd())
+		if (plannedEnd() <= tp)
 		{
-			return true;
+			finish(tp);
 		}
-		return false;
 	}
 };
 
@@ -79,13 +78,12 @@ public:
 		late_{late}
 	{}
 
-	virtual bool loop(Timepoint tp)
+	virtual void action(Timepoint tp)
 	{
-		if (tp >= plannedEnd() + late_)
+		if (plannedEnd() + late_ <= tp)
 		{
-			return true;
+			finish(tp);
 		}
-		return false;
 	}
 
 private:

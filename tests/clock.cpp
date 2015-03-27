@@ -17,7 +17,7 @@ using speditor::Timepoint;
 
 int main()
 {
-	const int minute = 50;
+	const int minute = 100;
 	const int interval = 30;
 
 	std::cout << "To stop application use Ctrl+C combination\n";
