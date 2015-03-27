@@ -15,10 +15,11 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O2 -static -lm")
 
 set(SD "${PROJECT_SOURCE_DIR}")
 
-file(GLOB_RECURSE SOURCES src/*.cpp)
-file(GLOB_RECURSE HEADERS {include,impl}/*.hpp)
+file(GLOB_RECURSE SOURCES "src/*.cpp")
+file(GLOB_RECURSE HEADERS "include/*.hpp")
+file(GLOB_RECURSE IMPL "impl/*.hpp")
 
-add_library(Speditor STATIC ${HEADERS} ${SOURCES})
+add_library(Speditor STATIC ${HEADERS} "${IMPL}" ${SOURCES})
 
 if(MAKE_TESTS)
 	add_subdirectory(googletest)
