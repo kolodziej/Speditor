@@ -38,17 +38,15 @@ void Schedule::start()
 			all_finished = true;
 			for (auto task : tasks_)
 			{
-				if (task->finished())
-				{
-					continue;
-				}
 				if (task->mtx_.try_lock())
 				{
 					Timepoint tp = clock_.timepoint();
-					if (task->commonLoop(tp) == false)
+					task->scheduleLoop_(tp);
+					if (task->finished() == false)
 					{
 						all_finished = false;
 					}
+
 					task->mtx_.unlock();
 				}
 			}

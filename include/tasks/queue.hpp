@@ -15,17 +15,14 @@ public:
 	Queue(bool strict = true);
 	Queue(std::initializer_list<TaskPtr>, bool strict = true);
 
-	virtual bool isRunning();
-	virtual bool isFinished();
+	virtual bool running();
+	virtual bool finished();
 
 	void addTask(TaskPtr);
 	void removeTask(TaskPtr);
 	std::vector<TaskPtr> getTasks();
 
-	virtual bool loop(Timepoint);
-
-protected:
-	virtual bool commonLoop(Timepoint);
+	virtual void action(Timepoint);
 
 private:
 	std::vector<TaskPtr> tasks_;

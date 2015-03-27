@@ -14,24 +14,6 @@ Queue::Queue(std::initializer_list<TaskPtr> list, bool strict) :
 	tasks_{list}
 {}
 
-bool Queue::loop(Timepoint tp)
-{
-	if (running())
-	{
-		if ((*current_task_)->commonLoop(tp))
-		{
-			++current_task_;
-		}
-	}
-
-	if (current_task_ == tasks_.end())
-	{
-		return true;
-	}
-
-	return false;
-}
-
 void Queue::addTask(TaskPtr task)
 {
 	tasks_.push_back(task);
@@ -57,9 +39,41 @@ std::vector<TaskPtr> Queue::getTasks()
 	return tasks_;
 }
 
-bool Queue::commonLoop(Timepoint tp)
+void Queue::action(Timepoint tp)
 {
-	
+	TaskPtr t = *current_task_;
+	bool do_action = false;
+
+	if (t->running())
+	{
+		if (t->last_run_ + t->interval_ <= tp)
+		{
+			do_action = true;
+		}
+
+		if (t->finished())
+		{
+			++current_task_;
+
+			if (current_task_ == tasks_.end())
+			{
+				t->finish(tp);
+			}
+		}
+	} else if (t->finished() == false)
+	{
+		if (t->strictStart() || t->plannedStart() >= tp)
+		{
+			t->start(tp);
+			do_action = true;
+		}
+	}
+
+	if (do_action)
+	{
+		t->action(tp);
+		t->last_run_ = tp;
+	}
 }
 
 } }

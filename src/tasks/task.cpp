@@ -1,98 +1,113 @@
 #include "tasks/task.hpp"
 
+#include "tools/logger.hpp"
+
 namespace speditor { namespace tasks {
 
 Task::Task(bool strict_start, unsigned long long interval) :
 	strict_start_{strict_start},
-	interval_{interval},
-	planned_start_{-1},
-	planned_end_{-1},
-	start_{-1},
-	end_{-1}
+	interval_{interval}
 {}
 
 Task::Task(Timepoint planned_start, Timepoint planned_end, bool strict_start, unsigned long long interval) :
+	planned_start_time_{planned_start},
+	planned_end_time_{planned_end},
 	strict_start_{strict_start},
-	interval_{interval},
-	planned_start_{planned_start},
-	planned_end_{planned_end}
+	interval_{interval}
 {}
 
-bool Task::canStart(Timepoint tp)
+bool Task::running() const
 {
-	return (planned_start_ <= tp || strict_start_ == false);
+	return start_time_;
 }
 
-bool Task::running()
+bool Task::finished() const
 {
-	return start_;
+	return end_time_;
 }
 
-bool Task::finished()
+Timepoint Task::plannedStart() const
 {
-	return end_;
+	return planned_start_time_;
 }
 
-Timepoint Task::plannedStart()
+Timepoint Task::startTime() const
 {
-	return planned_start_;
+	return start_time_;
 }
 
-void Task::plannedStart(Timepoint tp)
+Timepoint Task::plannedEnd() const
 {
-	planned_start_ = tp;
+	return planned_end_time_;
 }
 
-Timepoint Task::plannedEnd()
+Timepoint Task::endTime() const
 {
-	return planned_end_;
+	return end_time_;
 }
 
 void Task::plannedEnd(Timepoint tp)
 {
-	planned_end_ = tp;
+	planned_end_time_ = tp;
 }
 
-Timepoint Task::startTime()
+void Task::plannedStart(Timepoint tp)
 {
-	return start_;
-}
-
-Timepoint Task::endTime()
-{
-	return end_;
+	planned_start_time_ = tp;
 }
 
 void Task::setPlan(Timepoint start, Timepoint end)
 {
-	planned_start_ = start;
-	planned_end_ = end;
+	planned_start_time_ = start;
+	planned_end_time_ = end;
 }
 
-bool Task::commonLoop(Timepoint tp)
+bool Task::strictStart() const
 {
-	if (running() == false)
+	return strict_start_;
+}
+
+void Task::strictStart(bool strict_start)
+{
+	strict_start_ = strict_start;
+}
+
+void Task::start(Timepoint tp)
+{
+	start_time_ = tp;
+}
+
+void Task::finish(Timepoint tp)
+{
+	end_time_ = tp;
+}
+
+void Task::scheduleLoop_(Timepoint tp)
+{
+	if (running()) // started
 	{
-		if (canStart(tp))
+		unsigned int times = (tp - last_run_) / interval_;
+		if (times > 0)
 		{
-			start_ = tp;
-			last_run_ = tp - static_cast<long long>(interval_);
-		}
-	} else if (running())
-	{
-		Timepoint next_run;
-		while ((next_run = last_run_ + static_cast<long long>(interval_)) <= tp)
-		{
-			last_run_ = tp;
-			if (loop(tp))
+			if (times > 1)
 			{
-				end_ = tp;
-				return true;
+				LogWarning("Schedule's worker thread has to run action ", times, " times!");
 			}
+			while (times-- > 0)
+			{
+				action(tp);
+			}
+			last_run_ = tp;
+		}
+	} else if (finished() == false) // not finished and not running = not started
+	{
+		if (strict_start_ || plannedStart() <= tp)
+		{
+			start(tp);
+			action(tp);
+			last_run_ = tp;
 		}
 	}
-	
-	return false;
 }
 
 } }
