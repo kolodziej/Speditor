@@ -18,12 +18,12 @@ Task::Task(Timepoint planned_start, Timepoint planned_end, bool strict_start, un
 
 bool Task::running() const
 {
-	return start_time_;
+	return (start_time_ && static_cast<bool>(end_time_) == false);
 }
 
 bool Task::finished() const
 {
-	return end_time_;
+	return (start_time_ && end_time_);
 }
 
 Timepoint Task::plannedStart() const
