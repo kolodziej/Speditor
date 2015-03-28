@@ -3,6 +3,7 @@
 #include <sstream>
 #include <cmath>
 #include "clock.hpp"
+#include "duration.hpp"
 
 namespace speditor {
 
@@ -60,6 +61,28 @@ int Timepoint::week() const
 	return static_cast<int>(time_ / 10080) + 1;
 }
 
+Timepoint Timepoint::operator+(Duration right) const
+{
+	return Timepoint(time_ + right.get());
+}
+
+Timepoint Timepoint::operator-(Duration right) const
+{
+	return Timepoint(time_ - right.get());
+}
+
+Timepoint& Timepoint::operator+=(Duration right)
+{
+	time_ += right.get();
+	return *this;
+}
+
+Timepoint& Timepoint::operator-=(Duration right)
+{
+	time_ -= right.get();
+	return *this;
+}
+
 Timepoint& Timepoint::operator++()
 {
 	++time_;
@@ -114,6 +137,11 @@ bool Timepoint::operator==(Timepoint right) const
 bool Timepoint::operator!=(Timepoint right) const
 {
 	return time_ != right.get();
+}
+
+Timepoint::operator bool() const
+{
+	return time_ != -1;
 }
 
 }

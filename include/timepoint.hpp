@@ -4,6 +4,8 @@
 
 namespace speditor {
 
+class Duration;
+
 class Timepoint
 {
 public:
@@ -23,21 +25,10 @@ public:
 	short dayOfWeek() const;
 	int week() const;
 
-	template <typename Integer,
-		typename std::enable_if<std::is_integral<Integer>::value, Integer>::type>
-	Timepoint operator+(Integer) const;
-
-	template <typename Integer,
-		typename std::enable_if<std::is_integral<Integer>::value, Integer>::type>
-	Timepoint operator-(Integer) const;
-
-	template <typename Integer,
-		typename std::enable_if<std::is_integral<Integer>::value, Integer>::type>
-	Timepoint& operator+=(Integer);
-
-	template <typename Integer,
-		typename std::enable_if<std::is_integral<Integer>::value, Integer>::type>
-	Timepoint& operator-=(Integer);
+	Timepoint operator+(Duration) const;
+	Timepoint operator-(Duration) const;
+	Timepoint& operator+=(Duration);
+	Timepoint& operator-=(Duration);
 
 	Timepoint& operator++();
 	Timepoint operator++(int);
@@ -51,18 +42,13 @@ public:
 	bool operator==(Timepoint) const;
 	bool operator!=(Timepoint) const;
 
-	template <typename Integer,
-		typename std::enable_if<std::is_integral<Integer>::value, Integer>::type>
-	operator Integer() const;
-
-
+	operator bool() const;
+	
 private:
 	long long time_;
 
 };
 
 }
-
-#include "impl/timepoint.hpp"
 
 #endif
