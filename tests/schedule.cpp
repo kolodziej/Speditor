@@ -91,6 +91,15 @@ private:
 
 #define RAND(min, max) rd() % (max - min + 1) + min
 
+TEST_F(ScheduleTest, EmptySchedule)
+{
+  Schedule schedule(clock, 10);
+  clock.run();
+  schedule.start();
+  schedule.wait();
+  clock.wait();
+}
+
 TEST_F(ScheduleTest, BasicAccurate)
 {
 	Schedule schedule(clock, workers_number);

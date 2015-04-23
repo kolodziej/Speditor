@@ -17,7 +17,7 @@ using NodeId = unsigned long long;
 
 class Node
 {
-public:
+ public:
 	Node();
 	Node(const Node&) = delete;
 	NodeId id() const;
@@ -25,7 +25,7 @@ public:
 	void addRoad(RoadPtr);
 	std::vector<RoadPtr> roads();
 
-private:
+ private:
 	NodeId id_;
 	std::vector<RoadPtr> roads_;
 
@@ -36,7 +36,7 @@ private:
 
 	void setId_(NodeId);
 
-friend class Map;
+  friend class Map;
 };
 
 }

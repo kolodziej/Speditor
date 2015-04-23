@@ -4,15 +4,15 @@
 
 namespace speditor {
 
-class Crossroads :
-	public Node
-{
-public:
-	virtual NodeType type()
-	{
-		return NodeType::Crossroads;
-	}
-};
+    class Crossroads :
+        public Node
+    {
+        public:
+        virtual NodeType type()
+        {
+            return NodeType::Crossroads;
+        }
+    };
 
 }
 

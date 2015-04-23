@@ -3,6 +3,7 @@
 #include <sstream>
 #include <cmath>
 #include "clock.hpp"
+#include "duration.hpp"
 
 #include "tools/logger.hpp"
 
@@ -62,47 +63,25 @@ int Timepoint::week() const
 	return static_cast<int>(time_ / 10080) + 1;
 }
 
-Timepoint Timepoint::operator+(Timepoint right) const
+Timepoint Timepoint::operator+(Duration right) const
 {
-	return Timepoint(get() + right.get());
+	return Timepoint(time_ + right.get());
 }
 
-Timepoint Timepoint::operator-(Timepoint right) const
+Timepoint Timepoint::operator-(Duration right) const
 {
-	return Timepoint(get() + right.get());
+	return Timepoint(time_ - right.get());
 }
 
-Timepoint& Timepoint::operator+=(Timepoint right)
+Timepoint& Timepoint::operator+=(Duration right)
 {
 	time_ += right.get();
 	return *this;
 }
 
-Timepoint& Timepoint::operator-=(Timepoint right)
+Timepoint& Timepoint::operator-=(Duration right)
 {
 	time_ -= right.get();
-	return *this;
-}
-
-Timepoint Timepoint::operator+(long long add) const
-{
-	return Timepoint(time_ + add);
-}
-
-Timepoint Timepoint::operator-(long long subtract) const
-{
-	return Timepoint(time_ - subtract);
-}
-
-Timepoint& Timepoint::operator+=(long long add)
-{
-	time_ += add;
-	return *this;
-}
-
-Timepoint& Timepoint::operator-=(long long subtract)
-{
-	time_ -= subtract;
 	return *this;
 }
 
@@ -165,7 +144,7 @@ bool Timepoint::operator!=(Timepoint right) const
 
 Timepoint::operator bool() const
 {
-	return (time_ != -1);
+	return time_ != -1;
 }
 
 }
