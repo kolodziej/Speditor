@@ -8,34 +8,34 @@ Duration::Duration(unsigned long long duration) :
 
 Duration Duration::operator+(Duration right) const
 {
-	return Duration(duration_ + right.duration_);
+  return Duration(duration_ + right.duration_);
 }
 
 Duration Duration::operator-(Duration right) const
 {
-	return Duration(duration_ - right.duration_);
+  return Duration(duration_ - right.duration_);
 }
 
 Duration& Duration::operator+=(Duration right)
 {
-	duration_ += right.duration_;
-	return *this;
+  duration_ += right.duration_;
+  return *this;
 }
 
 Duration& Duration::operator-=(Duration right)
 {
-	duration_ -= right.duration_;
-	return *this;
+  duration_ -= right.duration_;
+  return *this;
 }
 
 void Duration::set(unsigned long long duration)
 {
-	duration_ = duration;
+  duration_ = duration;
 }
 
 unsigned long long Duration::get() const
 {
-	return duration_;
+  return duration_;
 }
 
 }

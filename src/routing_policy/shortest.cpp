@@ -6,7 +6,7 @@ namespace speditor { namespace routing_policy {
 
 int Shortest::getRoadWeight(RoadPtr road)
 {
-	return road->length();
+  return road->length();
 }
 
 } }

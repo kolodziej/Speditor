@@ -10,26 +10,26 @@ Node::Node() :
 
 NodeId Node::id() const
 {
-	return id_;
+  return id_;
 }
 
 void Node::addRoad(RoadPtr road)
 {
-	roads_.push_back(road);
+  roads_.push_back(road);
 }
 
 std::vector<RoadPtr> Node::roads()
 {
-	return roads_;
+  return roads_;
 }
 
 void Node::setId_(NodeId id)
 {
-	if (id_ != 0)
-	{
-		// throw exception
-	}
-	id_ = id;
+  if (id_ != 0)
+  {
+    // throw exception
+  }
+  id_ = id;
 }
 
 }

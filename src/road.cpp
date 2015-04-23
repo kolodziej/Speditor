@@ -22,32 +22,32 @@ Road::Road(NodePtr destination, int length, int max_speed, std::shared_ptr<traff
 
 int Road::length() const
 {
-	return length_;
+  return length_;
 }
 
 int Road::maxSpeed() const
 {
-	return max_speed_;
+  return max_speed_;
 }
 
 int Road::averageSpeed() const
 {
-	return average_speed_;
+  return average_speed_;
 }
 
 int Road::time() const
 {
-	return static_cast<double>(length()) / (static_cast<double>(averageSpeed()) / 60.0); // time in minutes - convert averageSpeed to km per min
+  return static_cast<double>(length()) / (static_cast<double>(averageSpeed()) / 60.0); // time in minutes - convert averageSpeed to km per min
 }
 
 double Road::traffic() const
 {
-	return traffic_;
+  return traffic_;
 }
 
 NodePtr Road::destination() const
 {
-	return destination_;
+  return destination_;
 }
 
 }

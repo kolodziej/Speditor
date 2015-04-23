@@ -11,20 +11,20 @@ Sinus::Sinus(short rush_hour, double a, double b) :
   a_{a},
   b_{b}
 {
-	if (a > 1.0)
-	{
-		throw std::logic_error("Sinus policy: a > 1.0!");
-	}
+  if (a > 1.0)
+  {
+    throw std::logic_error("Sinus policy: a > 1.0!");
+  }
 }
 
 double Sinus::traffic(Timepoint tp)
 {
-	return std::abs(a_*std::sin(b_*calcX_(tp.hour())));
+  return std::abs(a_*std::sin(b_*calcX_(tp.hour())));
 }
 
 double Sinus::calcX_(short hour)
 {
-	return (12 - rush_hour_ + hour)*M_PI/24;
+  return (12 - rush_hour_ + hour)*M_PI/24;
 }
 
 } }
