@@ -6,7 +6,7 @@
 namespace speditor { namespace traffic_policy {
 
 Chain::Chain(std::initializer_list<std::reference_wrapper<Policy>>&& policies) :
-	policies_{policies}
+  policies_{policies}
 {}
 
 double Chain::traffic(Timepoint tp)

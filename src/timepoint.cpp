@@ -10,11 +10,11 @@
 namespace speditor {
 
 Timepoint::Timepoint(long long time) :
-	time_{time}
+  time_{time}
 {}
 
 Timepoint::Timepoint(short hour, short minute, int day, int week) :
- time_{0}
+  time_{0}
 {
 	set(hour, minute, day, week);
 }

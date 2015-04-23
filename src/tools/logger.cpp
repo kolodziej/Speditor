@@ -5,9 +5,9 @@
 namespace speditor { namespace tools {
 
 Logger::Logger(std::ostream& output, unsigned int settings) :
-	output_(output),
-	settings_{settings},
-	messages_number_{0}
+  output_(output),
+  settings_{settings},
+  messages_number_{0}
 {
 	on(LogType::Debug);
 	on(LogType::Warning);

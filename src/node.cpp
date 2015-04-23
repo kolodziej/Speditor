@@ -5,7 +5,7 @@
 namespace speditor {
 
 Node::Node() :
-	id_{0}
+  id_{0}
 {}
 
 NodeId Node::id() const

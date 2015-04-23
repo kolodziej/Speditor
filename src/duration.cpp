@@ -3,7 +3,7 @@
 namespace speditor {
 
 Duration::Duration(unsigned long long duration) :
-	duration_{duration}
+  duration_{duration}
 {}
 
 Duration Duration::operator+(Duration right) const

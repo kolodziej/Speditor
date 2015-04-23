@@ -9,8 +9,8 @@
 namespace speditor {
 
 Schedule::Schedule(Clock& clock, unsigned long threads) :
-	clock_(clock),
-	threads_num_{threads},
+  clock_(clock),
+  threads_num_{threads},
 	threads_running_{false}
 {}
 

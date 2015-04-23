@@ -1,4 +1,4 @@
-#include "map.hpp"
+h#include "map.hpp"
 #include "timepoint.hpp"
 
 #include <limits>
@@ -12,7 +12,7 @@
 namespace speditor {
 
 Map::Map() :
-	last_node_id_{0}
+  last_node_id_{0}
 {}
 
 void Map::addNode(NodePtr node)

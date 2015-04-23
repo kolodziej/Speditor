@@ -7,9 +7,9 @@
 namespace speditor { namespace traffic_policy {
 
 Sinus::Sinus(short rush_hour, double a, double b) :
-	rush_hour_{rush_hour},
-	a_{a},
-	b_{b}
+  rush_hour_{rush_hour},
+  a_{a},
+  b_{b}
 {
 	if (a > 1.0)
 	{
