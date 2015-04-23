@@ -11,7 +11,7 @@ using TaskPtr = std::shared_ptr<Task>;
 
 class Queue : public Task
 {
-public:
+ public:
 	Queue(bool strict = true);
 	Queue(std::initializer_list<TaskPtr>, bool strict = true);
 
@@ -24,7 +24,7 @@ public:
 
 	virtual void action(Timepoint);
 
-private:
+ private:
 	std::vector<TaskPtr> tasks_;
 	std::vector<TaskPtr>::iterator current_task_;
 	

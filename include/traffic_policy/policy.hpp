@@ -10,7 +10,7 @@ namespace traffic_policy {
 
 class Policy
 {
-public:
+ public:
 	virtual double traffic(Timepoint) = 0;
 };
 

@@ -7,7 +7,7 @@ namespace speditor { namespace routing_policy {
 
 class Shortest : public Abstract
 {
-public:
+ public:
 	int getRoadWeight(RoadPtr);
 };
 

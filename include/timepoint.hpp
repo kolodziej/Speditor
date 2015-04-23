@@ -8,9 +8,9 @@ class Duration;
 
 class Timepoint
 {
-public:
+ public:
   Timepoint() :
-    time_{-1}
+      time_{-1}
   {}
   Timepoint(long long);
   Timepoint(short hour, short minute, int day = 1, int week = 1);
@@ -44,7 +44,7 @@ public:
 
   operator bool() const;
   
-private:
+ private:
   long long time_;
 
 };

@@ -13,7 +13,7 @@ using NodePtr = std::shared_ptr<Node>;
 
 class Road
 {
-public:
+ public:
 	Road();
 	Road(NodePtr, int length = 0, int max_speed = 90, std::shared_ptr<traffic_policy::Policy> policy = nullptr);
 
@@ -24,7 +24,7 @@ public:
 	double traffic() const;
 	NodePtr destination() const;
 
-private:
+ private:
 	int length_;
 	int max_speed_;
 	int average_speed_;
@@ -32,7 +32,7 @@ private:
 	NodePtr destination_;
 	std::shared_ptr<traffic_policy::Policy> policy_;
 
-friend class Map;
+  friend class Map;
 };
 
 }

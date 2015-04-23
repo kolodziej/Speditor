@@ -5,7 +5,7 @@ namespace speditor {
 
 class Duration
 {
-public:
+ public:
 	Duration(unsigned long long duration);
 	
 	Duration operator+(Duration) const;
@@ -16,7 +16,7 @@ public:
 	void set(unsigned long long);
 	unsigned long long get() const;
 
-private:
+ private:
 	unsigned long long duration_;
 };
 

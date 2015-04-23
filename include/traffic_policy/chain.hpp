@@ -10,11 +10,11 @@ namespace speditor { namespace traffic_policy {
 
 class Chain : public Policy
 {
-public:
+ public:
 	Chain(std::initializer_list<std::reference_wrapper<Policy>>&&);
 	virtual double traffic(Timepoint);
 
-private:
+ private:
 	std::vector<std::reference_wrapper<Policy>> policies_;
 };
 

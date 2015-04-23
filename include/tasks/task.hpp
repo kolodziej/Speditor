@@ -1,7 +1,8 @@
+
 /* Speditor
  * @author Kacper Kołodziej 2015
  * @url http://kacperkolodziej.com/
-*/
+ */
 
 #ifndef SPEDITOR_TASKS_TASK_HPP
 #define SPEDITOR_TASKS_TASK_HPP
@@ -19,7 +20,7 @@ class Queue;
 
 class Task
 {
-public:
+ public:
 	Task(bool strict_start = true, unsigned long long interval = 1);
 	Task(Timepoint start_time, Timepoint end_time = -1, bool strict_start = true, unsigned long long interval = 1);
 
@@ -47,23 +48,23 @@ public:
 
 	virtual void action(Timepoint tp) = 0;
 
-protected:
+ protected:
 	virtual void scheduleLoop_(Timepoint tp);
 
-private:
+ private:
 	Timepoint planned_start_time_;
 	Timepoint planned_end_time_;
 	Timepoint start_time_;
 	Timepoint end_time_;
 	bool strict_start_;
 
-protected:
+ protected:
 	unsigned long long interval_;
 	Timepoint last_run_;
 	std::mutex mtx_;
 
-friend class speditor::Schedule;
-friend class speditor::tasks::Queue;
+  friend class speditor::Schedule;
+  friend class speditor::tasks::Queue;
 };
 
 } }

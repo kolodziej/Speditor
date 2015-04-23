@@ -6,10 +6,10 @@ namespace speditor { namespace traffic_policy {
 
 class Sinus : public Policy
 {
-public:
+ public:
 	Sinus(short rush_hour, double a = 1.0, double b = 1.0);
 	virtual double traffic(Timepoint);
-private:
+ private:
 	double calcX_(short);
 
 	short rush_hour_;

@@ -15,7 +15,7 @@ using TaskPtr = std::shared_ptr<tasks::Task>;
 
 class Schedule
 {
-public:
+ public:
 	Schedule(Clock&, unsigned long = 0);
 
 	void addTask(TaskPtr);
@@ -28,7 +28,7 @@ public:
 	int changeThreadsNumber(unsigned long);
 	int tasksPerThread() const;
 	
-private:
+ private:
 	Clock& clock_;
 	std::list<TaskPtr> tasks_;
 	size_t threads_num_;

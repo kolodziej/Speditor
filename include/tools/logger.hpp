@@ -15,15 +15,15 @@ namespace speditor { namespace tools {
 
 class Logger
 {
-public:
+ public:
 	enum Settings : unsigned int
 	{
 		Defaults = 1 | 4 | 8,
-		ShowTime = 1,
-		ShowTID = 2,
-		ShowType = 4,
-		ShowMessageNumber = 8
-	};
+        ShowTime = 1,
+        ShowTID = 2,
+        ShowType = 4,
+        ShowMessageNumber = 8
+        };
 	Logger(std::ostream& output, unsigned int settings = Defaults);
 
 	Logger& on(LogType type);
@@ -33,7 +33,7 @@ public:
 	template <typename... Args>
 	void log(LogType, Args... r);
 
-private:
+ private:
 	template <typename First, typename... Rest>
 	inline void push_log_(First f, Rest... r);
 

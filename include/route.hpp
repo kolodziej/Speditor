@@ -14,31 +14,31 @@ using RoadPtr = std::shared_ptr<Road>;
 
 class Route
 {
-public:
-	Route(NodePtr start_node);
-	Route(NodePtr start_node, std::vector<RoadPtr>);
+ public:
+  Route(NodePtr start_node);
+  Route(NodePtr start_node, std::vector<RoadPtr>);
 
 	std::vector<RoadPtr> roads() const;
 	NodePtr startNode() const;
-	NodePtr endNode() const;
+  NodePtr endNode() const;
 	Route& operator+=(Route);
 	bool continuous() const;
 	int length() const;
 	int time() const;
 
 	inline operator bool() const
-	{
-		return continuous();
-	}
+  {
+    return continuous();
+  }
 
-private:
+ private:
 	NodePtr start_node_;
 	std::vector<RoadPtr> roads_;
 
 	void addRoad_(RoadPtr);
 
-friend class Map;
-friend Route operator+(Route, Route);
+  friend class Map;
+  friend Route operator+(Route, Route);
 };
 
 Route operator+(Route, Route);

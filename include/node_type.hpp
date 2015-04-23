@@ -6,7 +6,7 @@ namespace speditor {
 enum class NodeType : short
 {
 	City = 0,
-	Crossroads
+  Crossroads
 };
 
 }

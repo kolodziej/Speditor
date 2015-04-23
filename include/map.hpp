@@ -22,7 +22,7 @@ class Timepoint;
 
 class Map
 {
-public:
+ public:
 	Map();
 
 	void addNode(NodePtr);
@@ -30,7 +30,7 @@ public:
 	Route getRoute(routing_policy::Abstract&, std::vector<NodePtr>);
 	void calcRoadsParams(Timepoint);
 
-private:
+ private:
 	NodeId last_node_id_;
 
 	NodeId nextNodeId_();
