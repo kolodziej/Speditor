@@ -18,23 +18,23 @@ using NodeId = unsigned long long;
 class Node
 {
  public:
-	Node();
-	Node(const Node&) = delete;
-	NodeId id() const;
-	virtual NodeType type() = 0;
-	void addRoad(RoadPtr);
-	std::vector<RoadPtr> roads();
+  Node();
+  Node(const Node&) = delete;
+  NodeId id() const;
+  virtual NodeType type() = 0;
+  void addRoad(RoadPtr);
+  std::vector<RoadPtr> roads();
 
  private:
-	NodeId id_;
-	std::vector<RoadPtr> roads_;
+  NodeId id_;
+  std::vector<RoadPtr> roads_;
 
-	// Dijkstra algorithm fields
-	int weight_;
-	RoadPtr road_;
-	NodePtr previous_node_;
+  // Dijkstra algorithm fields
+  int weight_;
+  RoadPtr road_;
+  NodePtr previous_node_;
 
-	void setId_(NodeId);
+  void setId_(NodeId);
 
   friend class Map;
 };

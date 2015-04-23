@@ -33,7 +33,7 @@ class City :
   {
     return NodeType::City;
   }
-	
+  
  private:
   std::string name_;
   unsigned int max_bases_;

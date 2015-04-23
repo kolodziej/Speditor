@@ -21,47 +21,47 @@ class Queue;
 class Task
 {
  public:
-	Task(bool strict_start = true, unsigned long long interval = 1);
-	Task(Timepoint start_time, Timepoint end_time = -1, bool strict_start = true, unsigned long long interval = 1);
+  Task(bool strict_start = true, unsigned long long interval = 1);
+  Task(Timepoint start_time, Timepoint end_time = -1, bool strict_start = true, unsigned long long interval = 1);
 
-	Task(const Task&) = delete;
+  Task(const Task&) = delete;
 
-	virtual bool running() const;
-	virtual bool finished() const;
+  virtual bool running() const;
+  virtual bool finished() const;
 
-	virtual Timepoint plannedStart() const;
-	virtual Timepoint startTime() const;
+  virtual Timepoint plannedStart() const;
+  virtual Timepoint startTime() const;
 
-	virtual Timepoint plannedEnd() const;
-	virtual Timepoint endTime() const;
+  virtual Timepoint plannedEnd() const;
+  virtual Timepoint endTime() const;
 
-	void plannedStart(Timepoint start_time);
-	void plannedEnd(Timepoint end_time);
+  void plannedStart(Timepoint start_time);
+  void plannedEnd(Timepoint end_time);
 
-	void setPlan(Timepoint start_time, Timepoint end_time);
+  void setPlan(Timepoint start_time, Timepoint end_time);
 
-	bool strictStart() const;
-	void strictStart(bool strict_start);
+  bool strictStart() const;
+  void strictStart(bool strict_start);
 
-	void start(Timepoint tp);
-	void finish(Timepoint tp);
+  void start(Timepoint tp);
+  void finish(Timepoint tp);
 
-	virtual void action(Timepoint tp) = 0;
+  virtual void action(Timepoint tp) = 0;
 
  protected:
-	virtual void scheduleLoop_(Timepoint tp);
+  virtual void scheduleLoop_(Timepoint tp);
 
  private:
-	Timepoint planned_start_time_;
-	Timepoint planned_end_time_;
-	Timepoint start_time_;
-	Timepoint end_time_;
-	bool strict_start_;
+  Timepoint planned_start_time_;
+  Timepoint planned_end_time_;
+  Timepoint start_time_;
+  Timepoint end_time_;
+  bool strict_start_;
 
  protected:
-	unsigned long long interval_;
-	Timepoint last_run_;
-	std::mutex mtx_;
+  unsigned long long interval_;
+  Timepoint last_run_;
+  std::mutex mtx_;
 
   friend class speditor::Schedule;
   friend class speditor::tasks::Queue;

@@ -8,7 +8,7 @@ namespace speditor { namespace routing_policy {
 class Economical : public Abstract
 {
  public:
-	int getRoadWeight(RoadPtr);
+  int getRoadWeight(RoadPtr);
 };
 
 } }

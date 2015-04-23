@@ -11,7 +11,7 @@ namespace traffic_policy {
 class Policy
 {
  public:
-	virtual double traffic(Timepoint) = 0;
+  virtual double traffic(Timepoint) = 0;
 };
 
 } }

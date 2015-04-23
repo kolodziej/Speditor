@@ -13,7 +13,7 @@ using RoadPtr = std::shared_ptr<speditor::Road>;
 class Abstract
 {
  public:
-	virtual int getRoadWeight(RoadPtr road) = 0;
+  virtual int getRoadWeight(RoadPtr road) = 0;
 };
 
 } }

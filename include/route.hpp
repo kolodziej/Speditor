@@ -18,24 +18,24 @@ class Route
   Route(NodePtr start_node);
   Route(NodePtr start_node, std::vector<RoadPtr>);
 
-	std::vector<RoadPtr> roads() const;
-	NodePtr startNode() const;
+  std::vector<RoadPtr> roads() const;
+  NodePtr startNode() const;
   NodePtr endNode() const;
-	Route& operator+=(Route);
-	bool continuous() const;
-	int length() const;
-	int time() const;
+  Route& operator+=(Route);
+  bool continuous() const;
+  int length() const;
+  int time() const;
 
-	inline operator bool() const
+  inline operator bool() const
   {
     return continuous();
   }
 
  private:
-	NodePtr start_node_;
-	std::vector<RoadPtr> roads_;
+  NodePtr start_node_;
+  std::vector<RoadPtr> roads_;
 
-	void addRoad_(RoadPtr);
+  void addRoad_(RoadPtr);
 
   friend class Map;
   friend Route operator+(Route, Route);
