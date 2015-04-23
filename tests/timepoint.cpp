@@ -3,6 +3,10 @@
 
 using speditor::Timepoint;
 
+#include "tools/logger.hpp"
+
+speditor::tools::Logger global_logger(std::cout, speditor::tools::Logger::Defaults | speditor::tools::Logger::ShowTID);
+
 TEST(Timepoint, Basic)
 {
 	Timepoint tp(3*60);
@@ -47,6 +51,14 @@ TEST(Timepoint, Operators)
 	ASSERT_EQ(tp3.day(), 1);
 	ASSERT_EQ(tp3.dayOfWeek(), 0);
 	ASSERT_EQ(tp3.week(), 1);
+}
+
+TEST(Timepoint, OparatorEqual)
+{
+	const unsigned int time = 10;
+	Timepoint tp1(time), tp2(time);
+	ASSERT_EQ(tp1, tp2);
+	ASSERT_TRUE(tp1 == tp2);
 }
 
 TEST(Timepoint, Comparison)

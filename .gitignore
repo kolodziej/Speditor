@@ -9,3 +9,4 @@ CMakeCache.txt
 lib
 tests/bin
 scripts
+*#

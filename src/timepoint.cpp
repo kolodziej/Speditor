@@ -4,6 +4,8 @@
 #include <cmath>
 #include "clock.hpp"
 
+#include "tools/logger.hpp"
+
 namespace speditor {
 
 Timepoint::Timepoint(long long time) :
@@ -152,6 +154,7 @@ bool Timepoint::operator<=(Timepoint right) const
 
 bool Timepoint::operator==(Timepoint right) const
 {
+	LogDetail("Using Timepoint::operator==");
 	return time_ == right.get();
 }
 

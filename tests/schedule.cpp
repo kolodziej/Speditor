@@ -22,7 +22,6 @@ tools::Logger global_logger(std::cout, tools::Logger::Defaults | tools::Logger::
 
 std::random_device rd;
 
-
 class ScheduleTest : public ::testing::Test
 {
 protected:
@@ -32,7 +31,7 @@ protected:
 
 	void SetUp()
 	{
-		min = 2;
+		min = 5;
 		max = 10;
 		tasks_number = 100;
 		workers_number = 5;
@@ -90,7 +89,7 @@ private:
 	int late_;
 };
 
-#define RAND(min, max) rd() % (max - min) + min
+#define RAND(min, max) rd() % (max - min + 1) + min
 
 TEST_F(ScheduleTest, BasicAccurate)
 {
