@@ -113,15 +113,12 @@ void Task::scheduleLoop_(Timepoint tp)
     }
   } else if (finished() == false) // not finished and not running = not started
   {
-    if ((strict_start_ == true && plannedStart() >= tp) || strict_start_ == false)
+    if ((strict_start_ == true && plannedStart() <= tp) || strict_start_ == false)
     {
       LogDetail("Starting Task#", id(), " at ", tp);
       start(tp);
       action(tp);
       last_run_ = tp;
-    } else
-    {
-      LogDebug("Task#", id(), " will start on ", plannedStart());
     }
   }
 }

@@ -27,15 +27,15 @@ class ScheduleTest : public ::testing::Test
 {
  protected:
   ScheduleTest() :
-      clock{100}
+      clock{30}
   {}
 
   void SetUp()
   {
     min = 5;
     max = 10;
-    tasks_number = 1;
-    workers_number = 1;
+    tasks_number = 100;
+    workers_number = 5;
     clock_minute = 20;
   }
 
@@ -184,12 +184,12 @@ TEST_F(ScheduleTest, BasicAccurate)
     TaskPtr t = std::get<2>(task);
 
     // start time
-    ASSERT_TRUE(t->plannedStart() == std::get<0>(task));
-    ASSERT_TRUE(t->plannedStart() == t->startTime());
+    ASSERT_EQ(t->plannedStart(), std::get<0>(task));
+    ASSERT_EQ(t->plannedStart(), t->startTime());
 
     // end time
-    ASSERT_TRUE(t->plannedEnd() == std::get<1>(task));
-    ASSERT_TRUE(t->endTime() == t->plannedEnd());
+    ASSERT_EQ(t->plannedEnd(), std::get<1>(task));
+    ASSERT_EQ(t->endTime(), t->plannedEnd());
   }
 }
 
@@ -221,11 +221,11 @@ TEST_F(ScheduleTest, BasicInAccurate)
     TaskPtr t = std::get<2>(task);
 
     // start time
-    ASSERT_TRUE(t->plannedStart() == std::get<0>(task));
-    ASSERT_TRUE(t->plannedStart().get() == t->startTime().get());
+    ASSERT_EQ(t->plannedStart(), std::get<0>(task));
+    ASSERT_EQ(t->plannedStart(), t->startTime());
 
     // end time
-    ASSERT_TRUE(t->endTime().get() == std::get<1>(task).get());
+    ASSERT_EQ(t->endTime(), std::get<1>(task));
   }
 }
 
