@@ -11,7 +11,7 @@ include_directories(
 	"../"
 )
 
-set(CMAKE_CXX_FLAGS "-std=c++11 -g")
+set(CMAKE_CXX_FLAGS "-std=c++11 -g -DDEBUG -DLOG_ALL")
 set(LIBRARIES gtest gtest_main Speditor)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "./bin")
 
