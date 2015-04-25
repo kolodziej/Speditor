@@ -24,69 +24,69 @@ std::random_device rd;
 
 class ScheduleTest : public ::testing::Test
 {
-protected:
-	ScheduleTest() :
-		clock{50}
-	{}
+ protected:
+  ScheduleTest() :
+      clock{50}
+  {}
 
-	void SetUp()
-	{
-		min = 5;
-		max = 10;
-		tasks_number = 100;
-		workers_number = 5;
-		clock_minute = 20;
-	}
+  void SetUp()
+  {
+    min = 5;
+    max = 10;
+    tasks_number = 100;
+    workers_number = 5;
+    clock_minute = 20;
+  }
 
-	void TearDown()
-	{
-		tasks.clear();
-	}
+  void TearDown()
+  {
+    tasks.clear();
+  }
 
-	int min;
-	int max;
-	int tasks_number;
-	int workers_number;
-	int clock_minute;
+  int min;
+  int max;
+  int tasks_number;
+  int workers_number;
+  int clock_minute;
 
-	std::vector<std::tuple<Timepoint, Timepoint, TaskPtr>> tasks;
-	Clock clock;
+  std::vector<std::tuple<Timepoint, Timepoint, TaskPtr>> tasks;
+  Clock clock;
 };
 
 class AccurateTask : public st::Task
 {
-public:
-	AccurateTask(Timepoint begin, Timepoint end) :
-		Task{begin, end}
-	{}
+ public:
+  AccurateTask(Timepoint begin, Timepoint end) :
+      Task{begin, end}
+  {}
 
-	virtual void action(Timepoint tp)
-	{
-		if (plannedEnd() <= tp)
-		{
-			finish(tp);
-		}
-	}
+  virtual void action(Timepoint tp)
+  {
+    if (plannedEnd() <= tp)
+    {
+      finish(tp);
+    }
+  }
 };
 
 class InAccurateTask : public st::Task
 {
-public:
-	InAccurateTask(Timepoint begin, Timepoint end, int late):
-		Task{begin, end},
-		late_{late}
-	{}
+ public:
+  InAccurateTask(Timepoint begin, Timepoint end, int late):
+      Task{begin, end},
+    late_{late}
+  {}
 
-	virtual void action(Timepoint tp)
-	{
-		if (plannedEnd() + late_ <= tp)
-		{
-			finish(tp);
-		}
-	}
+  virtual void action(Timepoint tp)
+  {
+    if (plannedEnd() + late_ <= tp)
+    {
+      finish(tp);
+    }
+  }
 
-private:
-	int late_;
+ private:
+  int late_;
 };
 
 #define RAND(min, max) rd() % (max - min + 1) + min
@@ -102,71 +102,71 @@ TEST_F(ScheduleTest, EmptySchedule)
 
 TEST_F(ScheduleTest, BasicAccurate)
 {
-	Schedule schedule(clock, workers_number);
-	for (int i = 0; i < tasks_number; ++i)
-	{
-		Timepoint begin(RAND(min, max));
-		Timepoint end = begin + static_cast<long long>(RAND(min, max));
-		TaskPtr ptr = std::make_shared<AccurateTask>(begin, end);
-		auto tup = std::make_tuple(begin, end, ptr);
-		tasks.push_back(tup);
-		schedule.addTask(ptr);
-	}
+  Schedule schedule(clock, workers_number);
+  for (int i = 0; i < tasks_number; ++i)
+  {
+    Timepoint begin(RAND(min, max));
+    Timepoint end = begin + static_cast<long long>(RAND(min, max));
+    TaskPtr ptr = std::make_shared<AccurateTask>(begin, end);
+    auto tup = std::make_tuple(begin, end, ptr);
+    tasks.push_back(tup);
+    schedule.addTask(ptr);
+  }
 
-	// starts tasks
-	clock.run();
-	schedule.start();
-	schedule.wait();
-	clock.wait();
+  // starts tasks
+  clock.run();
+  schedule.start();
+  schedule.wait();
+  clock.wait();
 
-	// checking test
-	for (auto task : tasks)
-	{
-		TaskPtr t = std::get<2>(task);
+  // checking test
+  for (auto task : tasks)
+  {
+    TaskPtr t = std::get<2>(task);
 
-		// start time
-		ASSERT_EQ(t->plannedStart(), std::get<0>(task));
-		ASSERT_EQ(t->plannedStart(), t->startTime());
+    // start time
+    ASSERT_EQ(t->plannedStart(), std::get<0>(task));
+    ASSERT_EQ(t->plannedStart(), t->startTime());
 
-		// end time
-		ASSERT_EQ(t->plannedEnd(), std::get<1>(task));
-		ASSERT_EQ(t->endTime().get(), t->plannedEnd().get());
-	}
+    // end time
+    ASSERT_EQ(t->plannedEnd(), std::get<1>(task));
+    ASSERT_EQ(t->endTime().get(), t->plannedEnd().get());
+  }
 }
 
 TEST_F(ScheduleTest, BasicInAccurate)
 {
-	Schedule schedule(clock, workers_number);
-	for (int i = 0; i < tasks_number; ++i)
-	{
-		Timepoint begin(RAND(min, max));
-		Timepoint end = begin + static_cast<long long>(RAND(min, max));
-		int late = RAND(1,min);
-		auto tup = std::make_tuple(begin, end+late, std::make_shared<InAccurateTask>(begin, end, late));
-		tasks.push_back(tup);
-		schedule.addTask(std::get<2>(tup));
-	}
+  Schedule schedule(clock, workers_number);
+  for (int i = 0; i < tasks_number; ++i)
+  {
+    Timepoint begin(RAND(min, max));
+    Timepoint end = begin + static_cast<long long>(RAND(min, max));
+    int late = RAND(1,min);
+    auto tup = std::make_tuple(begin, end+late, std::make_shared<InAccurateTask>(begin, end, late));
+    tasks.push_back(tup);
+    schedule.addTask(std::get<2>(tup));
+  }
 
-	clock.run();
-	schedule.start();
-	schedule.wait();
-	clock.wait();
+  clock.run();
+  schedule.start();
+  schedule.wait();
+  clock.wait();
 
-	// checking test
-	for (auto task : tasks)
-	{
-		TaskPtr t = std::get<2>(task);
+  // checking test
+  for (auto task : tasks)
+  {
+    TaskPtr t = std::get<2>(task);
 
-		// start time
-		ASSERT_EQ(t->plannedStart(), std::get<0>(task));
-		ASSERT_EQ(t->plannedStart().get(), t->startTime().get());
+    // start time
+    ASSERT_EQ(t->plannedStart(), std::get<0>(task));
+    ASSERT_EQ(t->plannedStart().get(), t->startTime().get());
 
-		// end time
-		ASSERT_EQ(t->endTime().get(), std::get<1>(task).get());
-	}
+    // end time
+    ASSERT_EQ(t->endTime().get(), std::get<1>(task).get());
+  }
 }
 
 TEST_F(ScheduleTest, Queues)
 {
-	
+  
 }
