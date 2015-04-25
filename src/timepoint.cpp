@@ -133,7 +133,6 @@ bool Timepoint::operator<=(Timepoint right) const
 
 bool Timepoint::operator==(Timepoint right) const
 {
-  LogDetail("Using Timepoint::operator==");
   return time_ == right.get();
 }
 

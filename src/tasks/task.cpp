@@ -11,7 +11,7 @@ Task::Task(bool strict_start, unsigned long long interval) :
 
 Task::Task(Timepoint planned_start, Timepoint planned_end, bool strict_start, unsigned long long interval) :
   planned_start_time_{planned_start},
-  lanned_end_time_{planned_end},
+  planned_end_time_{planned_end},
   strict_start_{strict_start},
   interval_{interval}
 {}
