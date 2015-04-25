@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <stdexcept>
 
 #include "clock.hpp"
 #include "tools/logger.hpp"
@@ -14,9 +15,16 @@ Schedule::Schedule(Clock& clock, unsigned long threads) :
   threads_running_{false}
 {}
 
-void Schedule::addTask(TaskPtr task)
+bool Schedule::addTask(TaskPtr task)
 {
-  tasks_.push_back(task);
+  if (task->isReady())
+  {
+    tasks_.push_back(task);
+    return true;
+  } else
+  {
+    return false;
+  }
 }
 
 void Schedule::removeTask(TaskPtr task)

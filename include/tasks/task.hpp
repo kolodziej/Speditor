@@ -7,6 +7,7 @@
 #ifndef SPEDITOR_TASKS_TASK_HPP
 #define SPEDITOR_TASKS_TASK_HPP
 #include "timepoint.hpp"
+#include "duration.hpp"
 
 #include <mutex>
 
@@ -18,13 +19,18 @@ namespace tasks {
 
 class Queue;
 
+using TaskId = unsigned long long;
+
 class Task
 {
  public:
-  Task(bool strict_start = true, unsigned long long interval = 1);
-  Task(Timepoint start_time, Timepoint end_time = -1, bool strict_start = true, unsigned long long interval = 1);
+  Task(bool strict_start = true, Duration interval = 1);
+  Task(Timepoint start_time, Timepoint end_time = -1, bool strict_start = true, Duration interval = 1);
 
   Task(const Task&) = delete;
+
+  TaskId id() const;
+  virtual bool isReady() const;
 
   virtual bool running() const;
   virtual bool finished() const;
@@ -50,16 +56,20 @@ class Task
 
  protected:
   virtual void scheduleLoop_(Timepoint tp);
+  static TaskId getNextId_();
 
  private:
+  const TaskId id_;
   Timepoint planned_start_time_;
   Timepoint planned_end_time_;
   Timepoint start_time_;
   Timepoint end_time_;
   bool strict_start_;
 
+  static TaskId lastTaskId_;
+
  protected:
-  unsigned long long interval_;
+  Duration interval_;
   Timepoint last_run_;
   std::mutex mtx_;
 

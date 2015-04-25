@@ -4,17 +4,29 @@
 
 namespace speditor { namespace tasks {
 
-Task::Task(bool strict_start, unsigned long long interval) :
+Task::Task(bool strict_start, Duration interval) :
+  id_{getNextId_()},
   strict_start_{strict_start},
   interval_{interval}
 {}
 
-Task::Task(Timepoint planned_start, Timepoint planned_end, bool strict_start, unsigned long long interval) :
+Task::Task(Timepoint planned_start, Timepoint planned_end, bool strict_start, Duration interval) :
+  id_{getNextId_()},
   planned_start_time_{planned_start},
   planned_end_time_{planned_end},
   strict_start_{strict_start},
   interval_{interval}
 {}
+
+TaskId Task::id() const
+{
+  return id_;
+}
+
+bool Task::isReady() const
+{
+  return (planned_start_time_ && interval_ > 0);
+}
 
 bool Task::running() const
 {
@@ -91,7 +103,7 @@ void Task::scheduleLoop_(Timepoint tp)
     {
       if (times > 1)
       {
-        LogWarning("Schedule's worker thread has to run action ", times, " times!");
+        LogWarning("Schedule's worker thread has to run action ", times, " times in Task#", id());
       }
       while (times-- > 0)
       {
@@ -101,13 +113,24 @@ void Task::scheduleLoop_(Timepoint tp)
     }
   } else if (finished() == false) // not finished and not running = not started
   {
-    if (strict_start_ || plannedStart() <= tp)
+    if ((strict_start_ == true && plannedStart() >= tp) || strict_start_ == false)
     {
+      LogDetail("Starting Task#", id(), " at ", tp);
       start(tp);
       action(tp);
       last_run_ = tp;
+    } else
+    {
+      LogDebug("Task#", id(), " will start on ", plannedStart());
     }
   }
 }
+
+TaskId Task::getNextId_()
+{
+  return ++lastTaskId_;
+}
+
+TaskId Task::lastTaskId_ = 0;
 
 } }

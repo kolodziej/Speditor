@@ -18,7 +18,7 @@ class Schedule
  public:
   Schedule(Clock&, unsigned long = 0);
 
-  void addTask(TaskPtr);
+  bool addTask(TaskPtr);
   void removeTask(TaskPtr);
 
   void start();
