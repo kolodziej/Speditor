@@ -14,7 +14,7 @@ Timepoint::Timepoint(long long time) :
 {}
 
 Timepoint::Timepoint(short hour, short minute, int day, int week) :
-  time_{0}
+  time_{-1}
 {
   set(hour, minute, day, week);
 }
@@ -85,6 +85,11 @@ Timepoint& Timepoint::operator-=(Duration right)
   return *this;
 }
 
+Duration Timepoint::operator-(Timepoint right) const
+{
+  return Duration(get() - right.get());
+}
+
 Timepoint& Timepoint::operator++()
 {
   ++time_;
@@ -143,7 +148,7 @@ bool Timepoint::operator!=(Timepoint right) const
 
 Timepoint::operator bool() const
 {
-  return time_ != -1;
+  return time_ >= 0;
 }
 
 }

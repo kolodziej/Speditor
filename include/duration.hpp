@@ -10,8 +10,16 @@ class Duration
   
   Duration operator+(Duration) const;
   Duration operator-(Duration) const;
+  unsigned long long operator/(Duration) const;
   Duration& operator+=(Duration);
   Duration& operator-=(Duration);
+
+  bool operator==(Duration) const;
+  bool operator<(Duration) const;
+  bool operator>(Duration) const;
+  bool operator<=(Duration) const;
+  bool operator>=(Duration) const;
+  bool operator!=(Duration) const;
 
   void set(unsigned long long);
   unsigned long long get() const;

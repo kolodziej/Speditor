@@ -30,6 +30,8 @@ class Timepoint
   Timepoint& operator+=(Duration);
   Timepoint& operator-=(Duration);
 
+  Duration operator-(Timepoint) const;
+
   Timepoint& operator++();
   Timepoint operator++(int);
   Timepoint& operator--();

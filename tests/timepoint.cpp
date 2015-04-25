@@ -1,7 +1,9 @@
 #include "gtest/gtest.h"
 #include "timepoint.hpp"
+#include "duration.hpp"
 
 using speditor::Timepoint;
+using speditor::Duration;
 
 #include "tools/logger.hpp"
 
@@ -40,7 +42,7 @@ TEST(Timepoint, Adv2)
 TEST(Timepoint, Operators)
 {
   Timepoint tp1(1);
-  int interval = 2;
+  Duration interval = 2;
 
   Timepoint r1 = tp1 + interval;
   ASSERT_EQ(r1.get(), 3);
@@ -59,6 +61,13 @@ TEST(Timepoint, OparatorEqual)
   Timepoint tp1(time), tp2(time);
   ASSERT_EQ(tp1, tp2);
   ASSERT_TRUE(tp1 == tp2);
+}
+
+TEST(Timepoint, BoolOperator)
+{
+  ASSERT_TRUE(Timepoint(10));
+  ASSERT_FALSE(Timepoint());
+  ASSERT_FALSE(Timepoint(-1));
 }
 
 TEST(Timepoint, Comparison)
