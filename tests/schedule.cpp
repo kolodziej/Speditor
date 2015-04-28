@@ -37,6 +37,8 @@ class ScheduleTest : public ::testing::Test
     tasks_number = 100;
     workers_number = 5;
     clock_minute = 20;
+
+    global_logger.on(tools::LogType::DetailedDebug);
   }
 
   void TearDown()
@@ -231,5 +233,59 @@ TEST_F(ScheduleTest, BasicInAccurate)
 
 TEST_F(ScheduleTest, Queues)
 {
+  Schedule schedule(clock, 1);
+  auto queue = std::make_shared<st::Queue>();
+
+  const int beforeLate = 10;
+  const int afterLate = 10;
   
+  Timepoint begin{0}, end{0};
+  Duration late{10};
+  for (int i = 0; i < beforeLate; ++i)
+  {
+    begin = end;
+    end = begin + Duration{RAND(min, max)};
+    TaskPtr task = std::make_shared<AccurateTask>(begin, end);
+    tasks.emplace_back(begin, end, task);
+    queue->addTask(task);
+  }
+
+  // adding task with late
+  begin = end;
+  end = begin + Duration{RAND(min, max)};
+  TaskPtr task = std::make_shared<AccurateTask>(begin, end + late);
+  tasks.emplace_back(begin, end, task);
+  queue->addTask(task);
+
+  // adding late tasks
+  for (int i = 0; i < afterLate; ++i)
+  {
+    begin = end;
+    end = begin + Duration{RAND(min, max)};
+    TaskPtr task = std::make_shared<AccurateTask>(begin, end);
+    tasks.emplace_back(begin, end, task);
+    queue->addTask(task);
+  }
+
+  if(schedule.addTask(queue) == false)
+  {
+    FAIL() << "Couldn't add queue to the schedule!";
+  }
+
+  clock.run();
+  schedule.start();
+  schedule.wait();
+  clock.wait();
+
+  // assertion
+  for (auto t : tasks)
+  {
+    auto task = std::get<2>(t);
+    ASSERT_TRUE(task->startTime());
+    ASSERT_TRUE(task->endTime());
+  }
+
+  // check before and after late
+  
+  ASSERT_EQ(queue->endTime(), end + late);
 }

@@ -19,6 +19,7 @@ bool Schedule::addTask(TaskPtr task)
 {
   if (task->isReady())
   {
+    LogDetail("Added task#", task->id(), " to schedule!");
     tasks_.push_back(task);
     return true;
   } else

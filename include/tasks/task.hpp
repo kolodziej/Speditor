@@ -49,8 +49,8 @@ class Task
   bool strictStart() const;
   void strictStart(bool strict_start);
 
-  void start(Timepoint tp);
-  void finish(Timepoint tp);
+  virtual void start(Timepoint tp);
+  virtual void finish(Timepoint tp);
 
   virtual void action(Timepoint tp) = 0;
 

@@ -4,6 +4,7 @@
 
 #include <vector>
 #include <memory>
+#include <functional>
 
 namespace speditor { namespace tasks {
 
@@ -15,19 +16,22 @@ class Queue : public Task
   Queue(bool strict = true);
   Queue(std::initializer_list<TaskPtr>, bool strict = true);
 
-  virtual bool running();
-  virtual bool finished();
+  Timepoint plannedStart() const;
+  Timepoint plannedEnd() const;
+  Timepoint startTime() const;
+  Timepoint endTime() const;
 
   void addTask(TaskPtr);
   void removeTask(TaskPtr);
   std::vector<TaskPtr> getTasks();
 
+  void start(Timepoint);
+
   virtual void action(Timepoint);
 
  private:
   std::vector<TaskPtr> tasks_;
-  std::vector<TaskPtr>::iterator current_task_;
-  
+  std::vector<TaskPtr>::iterator current_task_;  
 };
 
 } }

@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <stdexcept>
 
+#include "tools/logger.hpp"
+
 namespace speditor { namespace tasks {
 
 Queue::Queue(bool strict) :
@@ -14,8 +16,29 @@ Queue::Queue(std::initializer_list<TaskPtr> list, bool strict) :
   tasks_{list}
 {}
 
+Timepoint Queue::plannedStart() const
+{
+  return tasks_.front()->plannedStart();
+}
+
+Timepoint Queue::plannedEnd() const
+{
+  return tasks_.back()->plannedEnd();
+}
+
+Timepoint Queue::startTime() const
+{
+  return tasks_.front()->startTime();
+}
+
+Timepoint Queue::endTime() const
+{
+  return tasks_.back()->endTime();
+}
+
 void Queue::addTask(TaskPtr task)
 {
+  
   tasks_.push_back(task);
 }
 
@@ -39,40 +62,26 @@ std::vector<TaskPtr> Queue::getTasks()
   return tasks_;
 }
 
+void Queue::start(Timepoint tp)
+{
+  Task::start(tp);
+  current_task_ = tasks_.begin();
+}
+
 void Queue::action(Timepoint tp)
 {
-  TaskPtr t = *current_task_;
-  bool do_action = false;
+  LogDetail("Running Queue::action!");
+  TaskPtr task = *current_task_;
+  task->scheduleLoop_(tp);
 
-  if (t->running())
+  if (task->finished())
   {
-    if (t->last_run_ + t->interval_ <= tp)
-    {
-      do_action = true;
-    }
-
-    if (t->finished())
-    {
-      ++current_task_;
-
-      if (current_task_ == tasks_.end())
-      {
-        t->finish(tp);
-      }
-    }
-  } else if (t->finished() == false)
-  {
-    if (t->strictStart() || t->plannedStart() >= tp)
-    {
-      t->start(tp);
-      do_action = true;
-    }
+    ++current_task_;
   }
-
-  if (do_action)
+ 
+  if (current_task_ == tasks_.end())
   {
-    t->action(tp);
-    t->last_run_ = tp;
+    finish(tp);
   }
 }
 
