@@ -1,5 +1,6 @@
 #ifndef SPEDITOR_TIMEPOINT_HPP
 #define SPEDITOR_TIMEPOINT_HPP
+#include <ostream>
 #include <type_traits>
 
 namespace speditor {
@@ -45,6 +46,7 @@ class Timepoint
   bool operator!=(Timepoint) const;
 
   operator bool() const;
+  operator long long() const;
   
  private:
   long long time_;
@@ -52,5 +54,7 @@ class Timepoint
 };
 
 }
+
+std::ostream& operator<<(std::ostream&, const speditor::Timepoint&);
 
 #endif

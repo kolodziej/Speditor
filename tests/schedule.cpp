@@ -95,6 +95,16 @@ class AccurateTask : public st::Task
   }
 };
 
+class NSAccurateTask : public AccurateTask // NotStrict AccurateTask
+{
+ public:
+  NSAccurateTask(Timepoint begin, Timepoint end) :
+      AccurateTask{begin, end}
+  {
+    strictStart(false);
+  }
+};
+
 class InAccurateTask : public st::Task
 {
  public:
@@ -136,8 +146,7 @@ TEST_F(ScheduleTest, EmptyTask)
   {
     Timepoint begin(0);
     TaskPtr ptr = std::make_shared<EmptyTask>(begin);
-    auto tup = std::make_tuple(begin, begin, ptr);
-    tasks.push_back(tup);
+    tasks.emplace_back(begin, begin, ptr);
     if (schedule.addTask(ptr) == false)
     {
       LogError("Task ", ptr->id(), " has not been added to Schedule!");
@@ -166,8 +175,7 @@ TEST_F(ScheduleTest, BasicAccurate)
     Timepoint begin(RAND(min, max));
     Timepoint end = begin + Duration(RAND(min, max));
     TaskPtr ptr = std::make_shared<AccurateTask>(begin, end);
-    auto tup = std::make_tuple(begin, end, ptr);
-    tasks.push_back(tup);
+    tasks.emplace_back(begin, end, ptr);
     if (schedule.addTask(ptr) == false)
     {
       LogError("Task ", ptr->id(), " has not been added to Schedule!");
@@ -201,11 +209,10 @@ TEST_F(ScheduleTest, BasicInAccurate)
   for (int i = 0; i < tasks_number; ++i)
   {
     Timepoint begin{RAND(min, max)};
-    Timepoint end{begin + Duration(RAND(min, max))};
+    Timepoint end{begin + Duration{RAND(min, max)}};
     Duration late{RAND(1,min)};
     TaskPtr ptr = std::make_shared<InAccurateTask>(begin, end, late);
-    auto tup = std::make_tuple(begin, end+late, ptr);
-    tasks.push_back(tup);
+    tasks.emplace_back(begin, end+late, ptr);
     if (schedule.addTask(ptr) == false)
     {
       LogError("Task ", ptr->id(), " has not been added to Schedule!");
@@ -228,6 +235,44 @@ TEST_F(ScheduleTest, BasicInAccurate)
 
     // end time
     ASSERT_EQ(t->endTime(), std::get<1>(task));
+  }
+}
+
+TEST_F(ScheduleTest, NotStrictAccurate)
+{
+  Schedule schedule(clock, workers_number);
+  for (int i = 0; i < tasks_number; ++i)
+  {
+    // task one
+    Timepoint begin1{RAND(min, max)};
+    Timepoint end1{begin1 + Duration{RAND(min, max)}};
+
+    // task two
+    Timepoint begin2{end1 + Duration{RAND(min+1, max)}};
+    Timepoint end2{begin2 + Duration{RAND(min, max)}};
+
+    TaskPtr task1 = std::make_shared<NSAccurateTask>(begin1, end1);
+    TaskPtr task2 = std::make_shared<NSAccurateTask>(begin2, end2);
+
+    tasks.emplace_back(begin1, end1, task1);
+    tasks.emplace_back(begin2, end2, task2);
+
+    schedule.addTask(task1);
+    schedule.addTask(task2);
+  }
+
+  clock.run();
+  schedule.start();
+  schedule.wait();
+  clock.wait();
+
+  for (auto task : tasks)
+  {
+    TaskPtr ptr = std::get<2>(task);
+
+    ASSERT_GE(std::get<0>(task), ptr->startTime());
+    ASSERT_GE(std::get<1>(task), ptr->endTime());
+    ASSERT_EQ(ptr->plannedStart() - ptr->startTime(), ptr->plannedEnd() - ptr->endTime());
   }
 }
 

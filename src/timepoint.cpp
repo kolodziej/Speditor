@@ -2,6 +2,7 @@
 
 #include <sstream>
 #include <cmath>
+
 #include "clock.hpp"
 #include "duration.hpp"
 
@@ -151,4 +152,15 @@ Timepoint::operator bool() const
   return time_ >= 0;
 }
 
+Timepoint::operator long long() const
+{
+  return time_;
 }
+
+}
+
+std::ostream& operator<<(std::ostream& stream, const speditor::Timepoint& tp)
+{
+  return stream << tp.get();
+}
+
