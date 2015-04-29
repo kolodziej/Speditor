@@ -1,5 +1,6 @@
 #ifndef SPEDITOR_DURATION_HPP
 #define SPEDITOR_DURATION_HPP
+#include <ostream>
 
 namespace speditor {
 
@@ -29,5 +30,7 @@ class Duration
 };
 
 }
+
+std::ostream& operator<<(std::ostream&, speditor::Duration);
 
 #endif

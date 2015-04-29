@@ -74,3 +74,8 @@ unsigned long long Duration::get() const
 }
 
 }
+
+std::ostream& operator<<(std::ostream& stream, speditor::Duration duration)
+{
+  return stream << duration.get();
+}
