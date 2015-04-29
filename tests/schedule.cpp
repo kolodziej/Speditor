@@ -27,7 +27,7 @@ class ScheduleTest : public ::testing::Test
 {
  protected:
   ScheduleTest() :
-      clock{30}
+      clock{100}
   {}
 
   void SetUp()
@@ -126,6 +126,28 @@ class InAccurateTask : public st::Task
 
  private:
   Duration late_;
+};
+
+class StrictDurationTask : public st::Task
+{
+ public:
+  StrictDurationTask(Timepoint begin, Duration duration) :
+    Task{begin, begin + duration},
+    duration_{duration}
+  {}
+
+  virtual void action(Timepoint tp)
+  {
+    LogDetail("Running at: ", tp);
+    if (startTime() + duration_ <= tp)
+    {
+      finish(tp);
+      LogDetail("Finishing at: ", tp, " PS: ", plannedStart(), ", S: ", startTime(), " PE: ", plannedEnd(), " E: ", endTime());
+    }
+  }
+
+ private:
+  Duration duration_;  
 };
 
 #define RAND(min, max) rd() % (max - min + 1) + min
@@ -285,29 +307,32 @@ TEST_F(ScheduleTest, Queues)
   const int afterLate = 10;
   
   Timepoint begin{0}, end{0};
-  Duration late{10};
+  Duration late{10}, task_duration{0};
   for (int i = 0; i < beforeLate; ++i)
   {
+    task_duration.set(RAND(min, max));
     begin = end;
-    end = begin + Duration{RAND(min, max)};
-    TaskPtr task = std::make_shared<AccurateTask>(begin, end);
+    end = begin + task_duration;
+    TaskPtr task = std::make_shared<StrictDurationTask>(begin, task_duration);
     tasks.emplace_back(begin, end, task);
     queue->addTask(task);
   }
 
   // adding task with late
+  task_duration.set(RAND(min, max));
   begin = end;
-  end = begin + Duration{RAND(min, max)};
-  TaskPtr task = std::make_shared<AccurateTask>(begin, end + late);
-  tasks.emplace_back(begin, end, task);
+  end = begin + task_duration;
+  TaskPtr task = std::make_shared<StrictDurationTask>(begin, task_duration + late);
+  tasks.emplace_back(begin, end + late, task);
   queue->addTask(task);
 
   // adding late tasks
   for (int i = 0; i < afterLate; ++i)
   {
+    task_duration.set(RAND(min, max));
     begin = end;
-    end = begin + Duration{RAND(min, max)};
-    TaskPtr task = std::make_shared<AccurateTask>(begin, end);
+    end = begin + task_duration;
+    TaskPtr task = std::make_shared<StrictDurationTask>(begin, task_duration);
     tasks.emplace_back(begin, end, task);
     queue->addTask(task);
   }
