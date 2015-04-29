@@ -16,6 +16,11 @@ Queue::Queue(std::initializer_list<TaskPtr> list, bool strict) :
   tasks_{list}
 {}
 
+bool Queue::isReady() const
+{
+  return true;
+}
+
 Timepoint Queue::plannedStart() const
 {
   return tasks_.front()->plannedStart();
@@ -70,7 +75,6 @@ void Queue::start(Timepoint tp)
 
 void Queue::action(Timepoint tp)
 {
-  LogDetail("Running Queue::action!");
   TaskPtr task = *current_task_;
   task->scheduleLoop_(tp);
 

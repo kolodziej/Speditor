@@ -16,6 +16,8 @@ class Queue : public Task
   Queue(bool strict = true);
   Queue(std::initializer_list<TaskPtr>, bool strict = true);
 
+  bool isReady() const;
+
   Timepoint plannedStart() const;
   Timepoint plannedEnd() const;
   Timepoint startTime() const;
